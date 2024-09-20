@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clientes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <div
+        class="w-64 bg-gray-800 text-white flex flex-col gap-10 shadow-xl shadow-black"
+      >
+        <div
+          id="itemBar"
+          class="flex items-center justify-start px-5 py-5 hover:bg-gray-700 hover:text-lg hover:font-bold transition-all duration-100"
+        >
+          <a
+            href="{% url 'home' %}"
+            class="w-full h-full flex items-center justify-start gap-3"
+          >
+            <i class="fas fa-home text-lg"></i> Home
+          </a>
+        </div>
+        <nav class="flex-1 flex flex-col items-start justify-start pt-3">
+          <div
+            id="itemBar"
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300 text-lg font-bold"
+          >
+            <a
+              href="{% url 'clientes' %}"
+              class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+            >
+              <i class="fas fa-users text-sm"></i> Clientes
+            </a>
+          </div>
+          <div
+            id="itemBar"
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300"
+          >
+            <a
+              href="{% url 'categorias' %}"
+              class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+            >
+              <i class="fas fa-tags text-sm"></i> Categorias
+            </a>
+          </div>
+          <div
+            id="itemBar"
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300"
+          >
+            <a
+              href="{% url 'produtos' %}"
+              class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+            >
+              <i class="fas fa-box text-sm"></i> Produtos
+            </a>
+          </div>
+          <div
+            id="itemBar"
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300"
+          >
+            <a
+              href="{% url 'ordens' %}"
+              class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+            >
+              <i class="fas fa-receipt text-sm"></i> Ordens
+            </a>
+          </div>
+          <div
+            id="itemBar"
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300"
+          >
+            <a
+              href="{% url 'users' %}"
+              class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+            >
+              <i class="fas fa-user text-sm"></i> Users
+            </a>
+          </div>
+        </nav>
+        <div
+          id="itemBar"
+          class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300 cursor-pointer"
+        >
+          <a
+            href="{% url 'logout' %}"
+            class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+          >
+            <i class="fas fa-sign-out-alt text-lg"></i> Logout
+          </a>
+        </div>
+      </div>
+
+      <!-- Conteúdo Principal -->
+      <div class="flex-1">
+        <!--Header-->
+        <header
+          class="bg-gray-700 text-white flex items-center justify-end px-6 py-3 mb-6 shadow-lg shadow-black/50"
+        >
+          <div
+            class="text-xl flex items-center justify-center text-center gap-3"
+          >
+            <i class="fas fa-user-circle text-center text-2xl"></i>
+            {{user.username }}
+          </div>
+        </header>
+        <!--main-->
+        <div class="flex-1 p-6 flex items-center justify-center">
+          <div
+            class="overflow-auto w-3/4 h-auto max-h-[60vh] relative rounded-lg shadow-lg shadow-gray-500/80"
+          >
+            <table class="table-auto w-full text-sm">
+              <thead class="bg-white sticky top-0 z-10">
+                <tr class="border-b border-gray-200">
+                  <th class="px-4 py-2 font-semibold text-base text-left">Lista de Clientes</th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <thead class="bg-gray-300 sticky top-9 z-10">
+                <tr class="border-b border-gray-200">
+                  <th class="px-4 py-2 font-semibold text-base text-left">ID</th>
+                  <th class="px-4 py-2 font-semibold text-base text-left">Nome</th>
+                  <th class="px-4 py-2 font-semibold text-base text-left">Cidade</th>
+                  <th class="px-4 py-2 font-semibold text-base text-left">Ativo</th>
+                  <th class="px-4 py-2 font-semibold text-base text-left">Ação</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<style>
+  #itemBar a {
+    transform: scale(1) translateX(0);
+    transition: all 0.2s ease;
+  }
+
+  #itemBar:hover a {
+    transform: scale(1);
+    transform: translateX(1rem);
+    transition: all 0.2s;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: large;
+  }
+</style>
+
+<script>
+  const cidades = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba", "Salvador", "Fortaleza", "Manaus", "Brasília"];
+
+  function gerarDadosAleatorios(quantidade) {
+    const dados = [];
+    for (let i = 0; i < quantidade; i++) {
+      const id = i + 1; // ID sequencial
+      const nome = gerarNomeAleatorio();
+      const cidade = cidades[Math.floor(Math.random() * cidades.length)];
+      const ativo = Math.random() < 0.5; // 50% de chance de ser ativo
+      dados.push({ id, nome, cidade, ativo });
+    }
+    return dados;
+  }
+
+  function gerarNomeAleatorio() {
+    const nomes = ["João", "Maria", "Pedro", "Ana", "Lucas", "Sofia", "Gabriel", "Beatriz", "Arthur", "Laura"];
+    const sobrenomes = ["Silva", "Santos", "Oliveira", "Rodrigues", "Souza", "Pereira", "Alves", "Costa", "Fernandes", "Gomes"];
+    return `${nomes[Math.floor(Math.random() * nomes.length)]} ${sobrenomes[Math.floor(Math.random() * sobrenomes.length)]}`;
+  }
+
+  const dados = gerarDadosAleatorios(50);
+
+  const tableBody = document.getElementById("tableBody");
+
+  dados.forEach((item, index) => {
+    const row = document.createElement("tr");
+    // Adiciona classe para linhas ímpares
+    if (index % 2 !== 0) {
+      row.classList.add("bg-gray-100");
+    } else {
+      row.classList.add("bg-white");
+    }
+    row.classList.add("border-b", "border-gray-200");
+
+    // Cria as células da linha
+    const idCell = document.createElement("td");
+    idCell.classList.add("px-4", "py-2");
+    idCell.textContent = item.id;
+    row.appendChild(idCell);
+
+    const nomeCell = document.createElement("td");
+    nomeCell.classList.add("px-4", "py-2");
+    nomeCell.textContent = item.nome;
+    row.appendChild(nomeCell);
+
+    const cidadeCell = document.createElement("td");
+    cidadeCell.classList.add("px-4", "py-2");
+    cidadeCell.textContent = item.cidade;
+    row.appendChild(cidadeCell);
+
+    const ativoCell = document.createElement("td");
+    ativoCell.classList.add("px-4", "py-2");
+    ativoCell.textContent = item.ativo ? "Sim" : "Não";
+    row.appendChild(ativoCell);
+
+    const acaoCell = document.createElement("td");
+    acaoCell.classList.add("px-4", "py-2");
+    const botaoEditar = document.createElement("button");
+    botaoEditar.classList.add("bg-blue-500", "hover:bg-blue-700", "text-white", "font-bold", "py-2", "px-4", "rounded");
+    botaoEditar.textContent = "Editar";
+    acaoCell.appendChild(botaoEditar);
+    row.appendChild(acaoCell);
+
+    tableBody.appendChild(row);
+  });
+</script>
+<style>
+  ::-webkit-scrollbar {
+  width: 12px; /* Largura da barra de rolagem */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Cor da pista da barra de rolagem */
+  border-radius: 10px; /* Arredonda os cantos da pista */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Cor da barra de rolagem */
+  border-radius: 10px; /* Arredonda os cantos da barra de rolagem */
+  border: 3px solid #f1f1f1; /* Adiciona um contorno na barra */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Cor da barra de rolagem ao passar o mouse */
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #444; /* Cor da barra de rolagem ao clicar */
+}
+</style>

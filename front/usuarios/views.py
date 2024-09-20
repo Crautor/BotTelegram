@@ -1,8 +1,9 @@
-from django.shortcuts import render, HttpResponse # type: ignore
+from django.shortcuts import render, HttpResponse, redirect  # type: ignore
 from django.contrib.auth.models import User # type: ignore
-from django.contrib.auth import authenticate # type: ignore
-from django.contrib.auth import login as login_django # type: ignore
-from django.contrib.auth.decorators import login_required # type: ignore
+from django.contrib.auth import authenticate, login as login_django, logout as logout_django # type: ignore
+from django.contrib.auth import login as login_django   # type: ignore
+from django.contrib.auth.decorators import login_required   # type: ignore
+from . import views
 
 def cadastro(request):
     if request.method == 'GET':
@@ -12,15 +13,15 @@ def cadastro(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
 
-        user= User.objects.filter(username=username).first()
+        user = User.objects.filter(username=username).first()
 
         if user:
             return HttpResponse('Usuário já existe')
         else:
             user = User.objects.create_user(username=username, email=email, password=password)
             user.save()
-        return HttpResponse('usuario cadastrado com sucesso')
-        
+        return HttpResponse('Usuário cadastrado com sucesso')
+
 
 def login(request):
     if request.method == "GET":
@@ -33,10 +34,11 @@ def login(request):
 
         if user:
             login_django(request, user)
-            return HttpResponse('Usuário logado com sucesso')
+            return redirect('home')  
         else:
             return HttpResponse('Usuário ou senha inválidos')
-        
-@login_required(login_url='/auth/login/')
-def plataforma(request):
-    return HttpResponse('plataforma')
+
+def logout_view(request):
+    logout_django(request)
+    return redirect('login')
+

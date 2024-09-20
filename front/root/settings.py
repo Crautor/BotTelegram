@@ -34,7 +34,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usuarios',
+    'dashboard',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -47,6 +49,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'root.urls'
+# LOGIN_REDIRECT_URL = '/plataforma/'
 
 TEMPLATES = [
     {
