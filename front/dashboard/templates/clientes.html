@@ -112,140 +112,242 @@
         </header>
         <!--main-->
         <div class="flex-1 p-6 flex items-center justify-center">
-          <div
-            class="overflow-auto w-3/4 h-auto max-h-[60vh] relative rounded-lg shadow-lg shadow-gray-500/80"
-          >
-            <table class="table-auto w-full text-sm">
-              <thead class="bg-white sticky top-0 z-10">
-                <tr class="border-b border-gray-200">
-                  <th class="px-4 py-2 font-semibold text-base text-left">Lista de Clientes</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr>
-              </thead>
-              <thead class="bg-gray-300 sticky top-9 z-10">
-                <tr class="border-b border-gray-200">
-                  <th class="px-4 py-2 font-semibold text-base text-left">ID</th>
-                  <th class="px-4 py-2 font-semibold text-base text-left">Nome</th>
-                  <th class="px-4 py-2 font-semibold text-base text-left">Cidade</th>
-                  <th class="px-4 py-2 font-semibold text-base text-left">Ativo</th>
-                  <th class="px-4 py-2 font-semibold text-base text-left">Ação</th>
-                </tr>
-              </thead>
-              <tbody id="tableBody"></tbody>
-            </table>
+          <div class="flex flex-col gap-4 w-4/5">
+            <div class="flex items-center justify-between">
+              <h2 class="text-2xl font-bold text-gray-700">Lista de Clientes</h2>
+              <select id="selectQuantidade" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto p-2.5">
+                <option value="10" selected>10</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+            <div
+              class="overflow-auto w-full h-auto max-h-[60vh] relative rounded-lg shadow-lg shadow-gray-500/80"
+            >
+              <table class="table-auto w-full text-sm">
+                <thead class="bg-white sticky top-0 z-10">
+                  <tr class="border-b border-gray-200">
+                    <th class="px-4 py-2 font-semibold text-base text-left w-1/12">ID</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-3/12">Nome</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-3/12">Cidade</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-2/12">Ativo</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-2/12">Ação</th>
+                  </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+              </table>
+            </div>
+            <div class="flex items-center justify-end gap-2">
+              <button id="btnAnterior" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded-lg">
+                Anterior
+              </button>
+              <div id="paginationButtons" class="flex items-center gap-2"></div>
+              <button id="btnProximo" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+                Próximo
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+
+      <!-- Script for Generating Data -->
+      <script>
+        const cidades = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba", "Salvador", "Fortaleza", "Manaus", "Brasília"];
+  
+        function gerarNomeAleatorio() {
+          const nomes = ["João", "Maria", "Pedro", "Ana", "Lucas", "Sofia", "Gabriel", "Beatriz", "Arthur", "Laura"];
+          const sobrenomes = ["Silva", "Santos", "Oliveira", "Rodrigues", "Souza", "Pereira", "Alves", "Costa", "Fernandes", "Gomes"];
+          return `${nomes[Math.floor(Math.random() * nomes.length)]} ${sobrenomes[Math.floor(Math.random() * sobrenomes.length)]}`;
+        }
+  
+        function gerarDadosAleatorios(quantidade) {
+          const dados = [];
+          for (let i = 0; i < quantidade; i++) {
+            const id = i + 1;
+            const nome = gerarNomeAleatorio();
+            const cidade = cidades[Math.floor(Math.random() * cidades.length)];
+            const ativo = Math.random() < 0.5;
+            dados.push({ id, nome, cidade, ativo });
+          }
+          return dados;
+        }
+  
+        let dados = gerarDadosAleatorios(100); // Dados gerados para a tabela
+      </script>
+  
+      <!-- Script for Pagination -->
+      <script>
+        let paginaAtual = 1;
+        let quantidadePorPagina = 50;
+  
+        const tableBody = document.getElementById("tableBody");
+        const selectQuantidade = document.getElementById("selectQuantidade");
+        const btnAnterior = document.getElementById("btnAnterior");
+        const btnProximo = document.getElementById("btnProximo");
+  
+        function atualizarTabela() {
+          tableBody.innerHTML = ""; // Limpa a tabela
+          const inicio = (paginaAtual - 1) * quantidadePorPagina;
+          const fim = inicio + quantidadePorPagina;
+          const clientesNaPagina = dados.slice(inicio, fim);
+  
+          clientesNaPagina.forEach((item, index) => {
+            const row = document.createElement("tr");
+            row.classList.add(index % 2 === 0 ? "bg-white" : "bg-gray-100", "border-b", "border-gray-200");
+  
+            row.innerHTML = `
+              <td class="px-4 py-2">${item.id}</td>
+              <td class="px-4 py-2">${item.nome}</td>
+              <td class="px-4 py-2">${item.cidade}</td>
+              <td class="px-4 py-2">${item.ativo ? 'Sim' : 'Não'}</td>
+              <td class="px-4 py-2">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
+              </td>`;
+            tableBody.appendChild(row);
+          });
+  
+          btnAnterior.disabled = paginaAtual === 1;
+          btnProximo.disabled = paginaAtual * quantidadePorPagina >= dados.length;
+  
+          atualizarBotoesPaginacao();
+        }
+  
+        function atualizarBotoesPaginacao() {
+          const paginationButtons = document.getElementById("paginationButtons");
+          paginationButtons.innerHTML = "";
+  
+          const totalPaginas = Math.ceil(dados.length / quantidadePorPagina);
+  
+          // Botão para a primeira página
+          const btnPrimeiro = document.createElement("button");
+          btnPrimeiro.textContent = "1";
+          btnPrimeiro.classList.add("bg-gray-300", "hover:bg-gray-400", "text-gray-700", "font-bold", "py-2", "px-4", "rounded-lg");
+          if (paginaAtual === 1) {
+            btnPrimeiro.classList.add("hidden");
+          }
+          btnPrimeiro.addEventListener("click", () => irParaPagina(1));
+          paginationButtons.appendChild(btnPrimeiro);
+  
+          // Botão para a página atual
+          const btnAtual = document.createElement("button");
+          btnAtual.textContent = paginaAtual;
+          btnAtual.classList.add("bg-gray-400", "text-gray-700", "font-bold", "py-2", "px-4", "rounded-lg");
+          paginationButtons.appendChild(btnAtual);
+  
+          // Botão para a próxima página
+          const btnProxima = document.createElement("button");
+
+          btnProxima.textContent = paginaAtual + 1;
+          btnProxima.classList.add("bg-gray-300", "hover:bg-gray-400", "text-gray-700", "font-bold", "py-2", "px-4", "rounded-lg");
+          if (paginaAtual + 1 > totalPaginas) {
+            btnProxima.classList.add("hidden"); 
+            btnProxima.classList.remove("flex"); 
+            
+          } else {
+            btnProxima.classList.add("flex"); 
+            btnProxima.classList.remove("hidden"); 
+            btnProxima.addEventListener("click", () => irParaPagina(paginaAtual + 1));
+          }
+          paginationButtons.appendChild(btnProxima);
+  
+          // Botão "..."
+          const btnPontos = document.createElement("button");
+          btnPontos.textContent = "...";
+          btnPontos.classList.add("bg-gray-300", "hover:bg-gray-400", "text-gray-700", "font-bold", "py-2", "px-4", "rounded-lg");
+          if (totalPaginas > 5) {
+            paginationButtons.appendChild(btnPontos);
+          }
+          if(paginaAtual == totalPaginas){
+              btnPontos.classList.add("hidden");
+          }else{
+            btnPontos.classList.remove("hidden");
+          }
+  
+          // Botão para a última página
+          const btnUltimo = document.createElement("button");
+          btnUltimo.textContent = totalPaginas;
+          btnUltimo.classList.add("bg-gray-300", "hover:bg-gray-400", "text-gray-700", "font-bold", "py-2", "px-4", "rounded-lg");
+          if (paginaAtual === totalPaginas) {
+            btnUltimo.classList.add("hidden");
+          }else{
+            btnUltimo.classList.remove("hidden");
+          }
+          if(totalPaginas < paginaAtual + 1){
+            btnUltimo.classList.add("hidden");
+          }else{
+            btnUltimo.classList.remove("hidden");
+          }
+
+          btnUltimo.addEventListener("click", () => irParaPagina(totalPaginas));
+          paginationButtons.appendChild(btnUltimo);
+        }
+  
+        function irParaPagina(pagina) {
+          paginaAtual = pagina;
+          atualizarTabela();
+        }
+  
+        btnProximo.addEventListener("click", () => {
+          if (paginaAtual * quantidadePorPagina < dados.length) {
+            paginaAtual++;
+            atualizarTabela();
+          }
+        });
+  
+        btnAnterior.addEventListener("click", () => {
+          if (paginaAtual > 1) {
+            paginaAtual--;
+            atualizarTabela();
+          }
+        });
+  
+        selectQuantidade.addEventListener("change", () => {
+          quantidadePorPagina = parseInt(selectQuantidade.value);
+          paginaAtual = 1;
+          atualizarTabela();
+        });
+  
+        atualizarTabela(); // Inicializa a tabela
+      </script>
+
+    <style>
+      ::-webkit-scrollbar {
+        width: 12px; /* Largura da barra de rolagem */
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1; /* Cor da pista da barra de rolagem */
+        border-radius: 10px; /* Arredonda os cantos da pista */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #888; /* Cor da barra de rolagem */
+        border-radius: 10px; /* Arredonda os cantos da barra de rolagem */
+        border: 3px solid #f1f1f1; /* Adiciona um contorno na barra */
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Cor da barra de rolagem ao passar o mouse */
+      }
+
+      ::-webkit-scrollbar-thumb:active {
+        background: #444; /* Cor da barra de rolagem ao clicar */
+      }
+      #itemBar a {
+        transform: scale(1) translateX(0); 
+        transition: all 0.2s ease; 
+      }
+      
+      #itemBar:hover a {
+        transform: scale(1);
+        transform: translateX(1rem);
+        transition: all 0.2s;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: large;
+      }
+    </style>
   </body>
 </html>
-<style>
-  #itemBar a {
-    transform: scale(1) translateX(0);
-    transition: all 0.2s ease;
-  }
-
-  #itemBar:hover a {
-    transform: scale(1);
-    transform: translateX(1rem);
-    transition: all 0.2s;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: large;
-  }
-</style>
-
-<script>
-  const cidades = ["São Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba", "Salvador", "Fortaleza", "Manaus", "Brasília"];
-
-  function gerarDadosAleatorios(quantidade) {
-    const dados = [];
-    for (let i = 0; i < quantidade; i++) {
-      const id = i + 1; // ID sequencial
-      const nome = gerarNomeAleatorio();
-      const cidade = cidades[Math.floor(Math.random() * cidades.length)];
-      const ativo = Math.random() < 0.5; // 50% de chance de ser ativo
-      dados.push({ id, nome, cidade, ativo });
-    }
-    return dados;
-  }
-
-  function gerarNomeAleatorio() {
-    const nomes = ["João", "Maria", "Pedro", "Ana", "Lucas", "Sofia", "Gabriel", "Beatriz", "Arthur", "Laura"];
-    const sobrenomes = ["Silva", "Santos", "Oliveira", "Rodrigues", "Souza", "Pereira", "Alves", "Costa", "Fernandes", "Gomes"];
-    return `${nomes[Math.floor(Math.random() * nomes.length)]} ${sobrenomes[Math.floor(Math.random() * sobrenomes.length)]}`;
-  }
-
-  const dados = gerarDadosAleatorios(50);
-
-  const tableBody = document.getElementById("tableBody");
-
-  dados.forEach((item, index) => {
-    const row = document.createElement("tr");
-    // Adiciona classe para linhas ímpares
-    if (index % 2 !== 0) {
-      row.classList.add("bg-gray-100");
-    } else {
-      row.classList.add("bg-white");
-    }
-    row.classList.add("border-b", "border-gray-200");
-
-    // Cria as células da linha
-    const idCell = document.createElement("td");
-    idCell.classList.add("px-4", "py-2");
-    idCell.textContent = item.id;
-    row.appendChild(idCell);
-
-    const nomeCell = document.createElement("td");
-    nomeCell.classList.add("px-4", "py-2");
-    nomeCell.textContent = item.nome;
-    row.appendChild(nomeCell);
-
-    const cidadeCell = document.createElement("td");
-    cidadeCell.classList.add("px-4", "py-2");
-    cidadeCell.textContent = item.cidade;
-    row.appendChild(cidadeCell);
-
-    const ativoCell = document.createElement("td");
-    ativoCell.classList.add("px-4", "py-2");
-    ativoCell.textContent = item.ativo ? "Sim" : "Não";
-    row.appendChild(ativoCell);
-
-    const acaoCell = document.createElement("td");
-    acaoCell.classList.add("px-4", "py-2");
-    const botaoEditar = document.createElement("button");
-    botaoEditar.classList.add("bg-blue-500", "hover:bg-blue-700", "text-white", "font-bold", "py-2", "px-4", "rounded");
-    botaoEditar.textContent = "Editar";
-    acaoCell.appendChild(botaoEditar);
-    row.appendChild(acaoCell);
-
-    tableBody.appendChild(row);
-  });
-</script>
-<style>
-  ::-webkit-scrollbar {
-  width: 12px; /* Largura da barra de rolagem */
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Cor da pista da barra de rolagem */
-  border-radius: 10px; /* Arredonda os cantos da pista */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888; /* Cor da barra de rolagem */
-  border-radius: 10px; /* Arredonda os cantos da barra de rolagem */
-  border: 3px solid #f1f1f1; /* Adiciona um contorno na barra */
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Cor da barra de rolagem ao passar o mouse */
-}
-
-::-webkit-scrollbar-thumb:active {
-  background: #444; /* Cor da barra de rolagem ao clicar */
-}
-</style>
