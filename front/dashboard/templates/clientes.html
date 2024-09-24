@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -128,11 +128,11 @@
               <table class="table-auto w-full text-sm">
                 <thead class="bg-white sticky top-0 z-10">
                   <tr class="border-b border-gray-200">
-                    <th class="px-4 py-2 font-semibold text-base text-left w-1/12">ID</th>
-                    <th class="px-4 py-2 font-semibold text-base text-left w-3/12">Nome</th>
-                    <th class="px-4 py-2 font-semibold text-base text-left w-3/12">Cidade</th>
-                    <th class="px-4 py-2 font-semibold text-base text-left w-2/12">Ativo</th>
-                    <th class="px-4 py-2 font-semibold text-base text-left w-2/12">Ação</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-1/5">ID</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-1/5">Nome</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-1/5">Cidade</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-1/5">Ativo</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-1/5">Ação</th>
                   </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
@@ -180,7 +180,7 @@
       <!-- Script for Pagination -->
       <script>
         let paginaAtual = 1;
-        let quantidadePorPagina = 50;
+        let quantidadePorPagina = 10;
   
         const tableBody = document.getElementById("tableBody");
         const selectQuantidade = document.getElementById("selectQuantidade");

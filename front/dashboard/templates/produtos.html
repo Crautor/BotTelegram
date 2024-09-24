@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -116,9 +116,9 @@
             <div class="flex items-center justify-between">
               <h2 class="text-2xl font-bold text-gray-700">Lista de Produtos</h2>
               <select id="selectQuantidade" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto p-2.5">
-                <option value="10">10</option>
+                <option value="10" selected>10</option>
                 <option value="30">30</option>
-                <option value="50" selected>50</option>
+                <option value="50">50</option>
                 <option value="100">100</option>
               </select>
             </div>
@@ -175,7 +175,7 @@
       <!-- Script for Pagination -->
       <script>
         let paginaAtual = 1;
-        let quantidadePorPagina = 50;
+        let quantidadePorPagina = 10;
   
         const tableBody = document.getElementById("tableBody");
         const selectQuantidade = document.getElementById("selectQuantidade");
