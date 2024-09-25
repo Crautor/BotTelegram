@@ -139,11 +139,11 @@
               </table>
             </div>
             <div class="flex items-center justify-end gap-2">
-              <button id="btnAnterior" class="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded-lg">
+              <button id="btnAnterior" class="bg-gray-600 text-white hover:bg-gray-800 hover:cursor-pointer font-bold py-2 px-4 rounded-lg">
                 Anterior
               </button>
               <div id="paginationButtons" class="flex items-center gap-2"></div>
-              <button id="btnProximo" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">
+              <button id="btnProximo" class="bg-gray-600 text-white hover:bg-gray-800 hover:cursor-pointer font-bold py-2 px-4 rounded-lg">
                 Próximo
               </button>
             </div>
@@ -203,7 +203,7 @@
               <td class="px-4 py-2">${item.cidade}</td>
               <td class="px-4 py-2">${item.ativo ? 'Sim' : 'Não'}</td>
               <td class="px-4 py-2">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Editar</button>
+                <button class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded">Editar</button>
               </td>`;
             tableBody.appendChild(row);
           });
@@ -214,7 +214,7 @@
           atualizarBotoesPaginacao();
         }
   
-        function atualizarBotoesPaginacao() {
+          function atualizarBotoesPaginacao() {
           const paginationButtons = document.getElementById("paginationButtons");
           paginationButtons.innerHTML = "";
   
@@ -223,7 +223,7 @@
           // Botão para a primeira página
           const btnPrimeiro = document.createElement("button");
           btnPrimeiro.textContent = "1";
-          btnPrimeiro.classList.add("bg-gray-300", "hover:bg-gray-400", "text-gray-700", "font-bold", "py-2", "px-4", "rounded-lg");
+          btnPrimeiro.classList.add("bg-gray-300", "text-black", "hover:bg-gray-400", "hover:cursor-pointer", "font-bold", "py-2", "px-4", "rounded-lg");
           if (paginaAtual === 1) {
             btnPrimeiro.classList.add("hidden");
           }
@@ -233,14 +233,14 @@
           // Botão para a página atual
           const btnAtual = document.createElement("button");
           btnAtual.textContent = paginaAtual;
-          btnAtual.classList.add("bg-gray-400", "text-gray-700", "font-bold", "py-2", "px-4", "rounded-lg");
+          btnAtual.classList.add("bg-gray-400", "text-black", "hover:bg-gray-400", "font-bold", "py-2", "px-4", "rounded-lg");
           paginationButtons.appendChild(btnAtual);
   
           // Botão para a próxima página
           const btnProxima = document.createElement("button");
 
           btnProxima.textContent = paginaAtual + 1;
-          btnProxima.classList.add("bg-gray-300", "hover:bg-gray-400", "text-gray-700", "font-bold", "py-2", "px-4", "rounded-lg");
+          btnProxima.classList.add("bg-gray-300", "text-black", "hover:bg-gray-400", "hover:cursor-pointer", "font-bold", "py-2", "px-4", "rounded-lg");
           if (paginaAtual + 1 > totalPaginas) {
             btnProxima.classList.add("hidden"); 
             btnProxima.classList.remove("flex"); 
@@ -255,7 +255,7 @@
           // Botão "..."
           const btnPontos = document.createElement("button");
           btnPontos.textContent = "...";
-          btnPontos.classList.add("bg-gray-300", "hover:bg-gray-400", "text-gray-700", "font-bold", "py-2", "px-4", "rounded-lg");
+          btnPontos.classList.add("bg-gray-300", "text-black", "hover:cursor-default", "font-bold", "py-2", "px-4", "rounded-lg");
           if (totalPaginas > 5) {
             paginationButtons.appendChild(btnPontos);
           }
@@ -268,7 +268,7 @@
           // Botão para a última página
           const btnUltimo = document.createElement("button");
           btnUltimo.textContent = totalPaginas;
-          btnUltimo.classList.add("bg-gray-300", "hover:bg-gray-400", "text-gray-700", "font-bold", "py-2", "px-4", "rounded-lg");
+          btnUltimo.classList.add("bg-gray-300", "text-black", "hover:bg-gray-400", "hover:cursor-pointer", "font-bold", "py-2", "px-4", "rounded-lg");
           if (paginaAtual === totalPaginas) {
             btnUltimo.classList.add("hidden");
           }else{
@@ -282,7 +282,9 @@
 
           btnUltimo.addEventListener("click", () => irParaPagina(totalPaginas));
           paginationButtons.appendChild(btnUltimo);
+          
         }
+  
   
         function irParaPagina(pagina) {
           paginaAtual = pagina;
