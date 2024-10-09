@@ -1,5 +1,5 @@
 """
-ASGI config for back project.
+ASGI config for root project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
