@@ -1,0 +1,15 @@
+
+#itemBar a {
+  transform: scale(1) translateX(0); 
+  transition: all 0.2s ease; 
+  background-color: red;
+}
+
+  #itemBar:hover a {
+    transform: scale(1);
+    transform: translateX(1rem);
+    transition: all 0.2s;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: large;
+  }

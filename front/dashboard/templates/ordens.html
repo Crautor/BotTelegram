@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ordens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <div
+        class="w-64 bg-gray-800 text-white flex flex-col gap-10 shadow-xl shadow-black"
+      >
+        <div
+          id="itemBar"
+          class="flex items-center justify-start px-5 py-5 hover:bg-gray-700 hover:text-lg hover:font-bold transition-all duration-100"
+        >
+          <a
+            href="{% url 'home' %}"
+            class="w-full h-full flex items-center justify-start gap-3"
+          >
+            <i class="fas fa-home text-lg"></i> Home
+          </a>
+        </div>
+        <nav class="flex-1 flex flex-col items-start justify-start pt-3">
+          <div
+            id="itemBar"
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300 "
+          >
+            <a
+              href="{% url 'clientes' %}"
+              class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+            >
+              <i class="fas fa-users text-sm"></i> Clientes
+            </a>
+          </div>
+          <div
+            id="itemBar"
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300"
+          >
+            <a
+              href="{% url 'categorias' %}"
+              class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+            >
+              <i class="fas fa-tags text-sm"></i> Categorias
+            </a>
+          </div>
+          <div
+            id="itemBar"
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300"
+          >
+            <a
+              href="{% url 'produtos' %}"
+              class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+            >
+              <i class="fas fa-box text-sm"></i> Produtos
+            </a>
+          </div>
+          <div
+            id="itemBar"
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300 text-lg font-bold"
+          >
+            <a
+              href="{% url 'ordens' %}"
+              class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+            >
+              <i class="fas fa-receipt text-sm"></i> Ordens
+            </a>
+          </div>
+          <div
+            id="itemBar"
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300"
+          >
+            <a
+              href="{% url 'users' %}"
+              class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+            >
+              <i class="fas fa-user text-sm"></i> Users
+            </a>
+          </div>
+        </nav>
+        <div
+          id="itemBar"
+          class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300 cursor-pointer"
+        >
+          <a
+            href="{% url 'logout' %}"
+            class="w-full flex items-center justify-start hover:scale-105 hover:translate-x-1 transition-all duration-300 gap-3"
+          >
+            <i class="fas fa-sign-out-alt text-lg"></i> Logout
+          </a>
+        </div>
+      </div>
+
+      <!-- Conteúdo Principal -->
+      <div class="flex-1">
+        <!--Header-->
+        <header
+          class="bg-gray-700 text-white flex items-center justify-end px-6 py-3 mb-6 shadow-lg shadow-black/50"
+        >
+          <div
+            class="text-xl flex items-center justify-center text-center gap-3"
+          >
+            <i class="fas fa-user-circle text-center text-2xl"></i>
+            {{user.username }}
+          </div>
+        </header>
+        <!--main-->
+        <div class="flex-1 p-6 flex items-center justify-center">
+          <div class="flex flex-col gap-4 w-4/5">
+            <div class="flex items-center justify-between">
+              <h2 class="text-2xl font-bold text-gray-700">Lista de Ordens</h2>
+              <select id="selectQuantidade" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto p-2.5">
+                <option value="10" selected>10</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+            <div
+              class="overflow-auto w-full h-auto max-h-[60vh] relative rounded-lg shadow-lg shadow-gray-500/80"
+            >
+              <table class="table-auto w-full text-sm">
+                <thead class="bg-white sticky top-0 z-10">
+                  <tr class="border-b border-gray-200">
+                    <th class="px-4 py-2 font-semibold text-base text-left w-2/12">ID</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-2/12">Cliente</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-2/12">Data</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-2/12">Status</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-2/12">Quantidade</th>
+                    <th class="px-4 py-2 font-semibold text-base text-left w-2/12">Ação</th>
+                  </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+              </table>
+            </div>
+            <div class="flex items-center justify-end gap-2">
+              <button id="btnAnterior" class="bg-gray-600 text-white hover:bg-gray-800 hover:cursor-pointer font-bold py-2 px-4 rounded-lg">
+                Anterior
+              </button>
+              <div id="paginationButtons" class="flex items-center gap-2"></div>
+              <button id="btnProximo" class="bg-gray-600 text-white hover:bg-gray-800 hover:cursor-pointer font-bold py-2 px-4 rounded-lg">
+                Próximo
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- Script for Generating Data -->
+      <script>
+        const nomes = ["João Silva", "Maria Santos", "Pedro Oliveira", "Ana Rodrigues", "Lucas Souza"];
+        const status = ["Pendente", "Aprovado", "Enviado", "Entregue", "Cancelado"];
+
+        function gerarDadosAleatorios(quantidade) {
+          const dados = [];
+          for (let i = 0; i < quantidade; i++) {
+            const id = i + 1;
+            const cliente = nomes[Math.floor(Math.random() * nomes.length)];
+            const data = new Date().toLocaleDateString(); // Data atual
+            const statusOrdem = status[Math.floor(Math.random() * status.length)];
+            const quantidade = Math.floor(Math.random() * 10) + 1;
+            dados.push({ id, cliente, data, status: statusOrdem, quantidade });
+          }
+          return dados;
+        }
+  
+        let dados = gerarDadosAleatorios(100); // Dados gerados para a tabela
+      </script>
+  
+      <!-- Script for Pagination -->
+      <script>
+        let paginaAtual = 1;
+        let quantidadePorPagina = 10;
+  
+        const tableBody = document.getElementById("tableBody");
+        const selectQuantidade = document.getElementById("selectQuantidade");
+        const btnAnterior = document.getElementById("btnAnterior");
+        const btnProximo = document.getElementById("btnProximo");
+  
+        function atualizarTabela() {
+          tableBody.innerHTML = ""; // Limpa a tabela
+          const inicio = (paginaAtual - 1) * quantidadePorPagina;
+          const fim = inicio + quantidadePorPagina;
+          const ordensNaPagina = dados.slice(inicio, fim);
+  
+          ordensNaPagina.forEach((item, index) => {
+            const row = document.createElement("tr");
+            row.classList.add(index % 2 === 0 ? "bg-white" : "bg-gray-100", "border-b", "border-gray-200");
+  
+            row.innerHTML = `
+              <td class="px-4 py-2">${item.id}</td>
+              <td class="px-4 py-2">${item.cliente}</td>
+              <td class="px-4 py-2">${item.data}</td>
+              <td class="px-4 py-2">${item.status}</td>
+              <td class="px-4 py-2">${item.quantidade}</td>
+              <td class="px-4 py-2">
+                <button class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded">Editar</button>
+              </td>`;
+            tableBody.appendChild(row);
+          });
+  
+          btnAnterior.disabled = paginaAtual === 1;
+          btnProximo.disabled = paginaAtual * quantidadePorPagina >= dados.length;
+  
+          atualizarBotoesPaginacao();
+        }
+  
+        function atualizarBotoesPaginacao() {
+          const paginationButtons = document.getElementById("paginationButtons");
+          paginationButtons.innerHTML = "";
+  
+          const totalPaginas = Math.ceil(dados.length / quantidadePorPagina);
+  
+          // Botão para a primeira página
+          const btnPrimeiro = document.createElement("button");
+          btnPrimeiro.textContent = "1";
+          btnPrimeiro.classList.add("bg-gray-300", "text-black", "hover:bg-gray-400", "hover:cursor-pointer", "font-bold", "py-2", "px-4", "rounded-lg");
+          if (paginaAtual === 1) {
+            btnPrimeiro.classList.add("hidden");
+          }
+          btnPrimeiro.addEventListener("click", () => irParaPagina(1));
+          paginationButtons.appendChild(btnPrimeiro);
+  
+          // Botão para a página atual
+          const btnAtual = document.createElement("button");
+          btnAtual.textContent = paginaAtual;
+          btnAtual.classList.add("bg-gray-400", "text-black", "hover:bg-gray-400", "font-bold", "py-2", "px-4", "rounded-lg");
+          paginationButtons.appendChild(btnAtual);
+  
+          // Botão para a próxima página
+          const btnProxima = document.createElement("button");
+
+          btnProxima.textContent = paginaAtual + 1;
+          btnProxima.classList.add("bg-gray-300", "text-black", "hover:bg-gray-400", "hover:cursor-pointer", "font-bold", "py-2", "px-4", "rounded-lg");
+          if (paginaAtual + 1 > totalPaginas) {
+            btnProxima.classList.add("hidden"); 
+            btnProxima.classList.remove("flex"); 
+            
+          } else {
+            btnProxima.classList.add("flex"); 
+            btnProxima.classList.remove("hidden"); 
+            btnProxima.addEventListener("click", () => irParaPagina(paginaAtual + 1));
+          }
+          paginationButtons.appendChild(btnProxima);
+  
+          // Botão "..."
+          const btnPontos = document.createElement("button");
+          btnPontos.textContent = "...";
+          btnPontos.classList.add("bg-gray-300", "text-black", "hover:cursor-default", "font-bold", "py-2", "px-4", "rounded-lg");
+          if (totalPaginas > 5) {
+            paginationButtons.appendChild(btnPontos);
+          }
+          if(paginaAtual == totalPaginas){
+              btnPontos.classList.add("hidden");
+          }else{
+            btnPontos.classList.remove("hidden");
+          }
+  
+          // Botão para a última página
+          const btnUltimo = document.createElement("button");
+          btnUltimo.textContent = totalPaginas;
+          btnUltimo.classList.add("bg-gray-300", "text-black", "hover:bg-gray-400", "hover:cursor-pointer", "font-bold", "py-2", "px-4", "rounded-lg");
+          if (paginaAtual === totalPaginas) {
+            btnUltimo.classList.add("hidden");
+          }else{
+            btnUltimo.classList.remove("hidden");
+          }
+          if(totalPaginas < paginaAtual + 1){
+            btnUltimo.classList.add("hidden");
+          }else{
+            btnUltimo.classList.remove("hidden");
+          }
+
+          btnUltimo.addEventListener("click", () => irParaPagina(totalPaginas));
+          paginationButtons.appendChild(btnUltimo);
+          
+        }
+  
+  
+        function irParaPagina(pagina) {
+          paginaAtual = pagina;
+          atualizarTabela();
+        }
+  
+        btnProximo.addEventListener("click", () => {
+          if (paginaAtual * quantidadePorPagina < dados.length) {
+            paginaAtual++;
+            atualizarTabela();
+          }
+        });
+  
+        btnAnterior.addEventListener("click", () => {
+          if (paginaAtual > 1) {
+            paginaAtual--;
+            atualizarTabela();
+          }
+        });
+  
+        selectQuantidade.addEventListener("change", () => {
+          quantidadePorPagina = parseInt(selectQuantidade.value);
+          paginaAtual = 1;
+          atualizarTabela();
+        });
+  
+        atualizarTabela(); // Inicializa a tabela
+      </script>
+
+    <style>
+      ::-webkit-scrollbar {
+        width: 12px; /* Largura da barra de rolagem */
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1; /* Cor da pista da barra de rolagem */
+        border-radius: 10px; /* Arredonda os cantos da pista */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #888; /* Cor da barra de rolagem */
+        border-radius: 10px; /* Arredonda os cantos da barra de rolagem */
+        border: 3px solid #f1f1f1; /* Adiciona um contorno na barra */
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Cor da barra de rolagem ao passar o mouse */
+      }
+
+      ::-webkit-scrollbar-thumb:active {
+        background: #444; /* Cor da barra de rolagem ao clicar */
+      }
+      #itemBar a {
+        transform: scale(1) translateX(0); 
+        transition: all 0.2s ease; 
+      }
+      
+      #itemBar:hover a {
+        transform: scale(1);
+        transform: translateX(1rem);
+        transition: all 0.2s;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: large;
+      }
+    </style>
+  </body>
+</html>
