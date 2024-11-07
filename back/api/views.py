@@ -9,6 +9,9 @@ from api.models.message_model import Message
 from api.models.order_item_model import OrderItem
 from api.models.order_model import Order
 from api.models.product_model import Product
+from api.models.cart_model import Cart
+from api.models.cart_item_model import CartItem
+
 
 from .serializers import UserSerializer
 from .serializers import CategorySerializer
@@ -17,6 +20,9 @@ from .serializers import MessageSerializer
 from .serializers import OrderItemSerializer
 from .serializers import OrderSerializer
 from .serializers import ProductSerializer
+from .serializers import CartItemSerializer
+from .serializers import CartSerializer
+
 
 @api_view(['GET'])
 def getUsers(request):
@@ -447,4 +453,91 @@ def getProductsByCategory(request, category_id):
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def getCart(request):
+    if request.method == 'GET':
+        products = Cart.objects.all()
+        serializer = CartSerializer(Cart, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['GET'])
+def getCartById(request, client_id):
+    try:
+        cart = Cart.objects.get(client_id=client_id, is_active=True)
+        serializer = CartSerializer(cart)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Cart.DoesNotExist:
+        return Response({"detail": "Cart not found"}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+def addToCart(request, client_id):
+    product_id = request.data.get('product_id')
+    quantity = request.data.get('quantity')
+
+    try:
+        cart = Cart.objects.get(client_id=client_id, is_active=True)
+    except Cart.DoesNotExist:
+        cart = Cart.objects.create(client_id=client_id)  # Cria um novo carrinho se não existir
+
+    try:
+        product = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        return Response({"detail": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    # Adiciona o produto ao carrinho (cria um item no carrinho)
+    cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+    if not created:
+        cart_item.quantity += quantity  # Se já existir, apenas incrementa a quantidade
+    cart_item.save()
+
+    return Response({"detail": "Product added to cart"}, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+def updateCartItem(request, client_id, cart_item_id):
+    try:
+        cart_item = CartItem.objects.get(id=cart_item_id, cart__client_id=client_id)
+    except CartItem.DoesNotExist:
+        return Response({"detail": "Cart item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    quantity = request.data.get('quantity')
+    if quantity:
+        cart_item.quantity = quantity
+        cart_item.save()
+        return Response({"detail": "Cart item updated"}, status=status.HTTP_200_OK)
+    return Response({"detail": "Invalid data"}, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def removeFromCart(request, client_id, cart_item_id):
+    try:
+        cart_item = CartItem.objects.get(id=cart_item_id, cart__client_id=client_id)
+        cart_item.delete()
+        return Response({"detail": "Item removed from cart"}, status=status.HTTP_200_OK)
+    except CartItem.DoesNotExist:
+        return Response({"detail": "Cart item not found"}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+def checkout(request, client_id):
+    try:
+        cart = Cart.objects.get(client_id=client_id, is_active=True)
+    except Cart.DoesNotExist:
+        return Response({"detail": "Cart not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    # Aqui você pode criar um pedido com os itens do carrinho, por exemplo
+    # Vamos criar uma ordem com base nos itens do carrinho (você pode adicionar mais lógica conforme necessário)
+    order = Order.objects.create(client=cart.client, status="pending", amount=cart.total_amount())  # O método `total_amount()` seria uma função que calcula o total com base nos itens do carrinho.
+
+    # Crie a ordem a partir dos itens no carrinho
+    for item in cart.cart_items.all():
+        OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity)
+
+    # Após finalizar a compra, podemos desativar o carrinho
+    cart.is_active = False
+    cart.save()
+
+    return Response({"detail": "Order created from cart"}, status=status.HTTP_201_CREATED)
 
