@@ -31,6 +31,11 @@ urlpatterns = [
     path('orderitem/update/<int:id>', views.updateOrderItem, name='updateOrderItem'),
     path('orderitem/delete/<int:id>', views.deleteOrderItem, name='deleteOrderItem'),
     path('orderitem/order/<int:id>', views.getOrderItemsByOrderID, name='getByOrderID'),
+    path('client/', views.getClients, name='getAll'),
+    path('client/<int:id>', views.getClientByID, name='getByID'),
+    path('client/create/', views.createClient, name='createClient'),
+    path('client/update/<int:id>', views.updateClient, name='updateClient'),
+    path('client/delete/<int:id>', views.deleteClient, name='deleteClient'),
     
 
 ]
