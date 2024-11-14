@@ -297,13 +297,15 @@ async def adicionar_ao_carrinho(update: Update, context: ContextTypes.DEFAULT_TY
 
 
 # Configuração do token do bot e inicialização do aplicativo
-BOT_TOKEN = os.getenv("BOT_TOKEN","7327581607:AAHG84Ie_4dR8LPSxkGP_ZAEZVZtD4NGYyw")
+BOT_TOKEN = os.getenv("BOT_TOKEN","7202444496:AAG8ZSQw1S-nXsbHsnxX4h_lGB3XaJ6QzuI")
 app = ApplicationBuilder().token(BOT_TOKEN).build()
 
 # Registro dos handlers
 app.add_handler(CommandHandler("listar_orders", listar_orders))
 app.add_handler(CommandHandler("iniciar", iniciar))
 app.add_handler(CallbackQueryHandler(tratar_botao))
+
+
 
 # Execução do bot
 app.run_polling()

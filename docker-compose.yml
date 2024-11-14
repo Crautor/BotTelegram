@@ -1,0 +1,55 @@
+services:
+  back:
+    depends_on:
+      - mysql
+    build:
+      context: ./back
+      dockerfile: dockerfile.back
+    ports:
+      - '3001:3001'
+    networks:
+      - bot_network
+    environment:
+      MYSQL_HOST: mysql # Nome do serviço mysql, que é o host no Docker
+      MYSQL_PORT: 3306 # Porta onde o MySQL escuta
+    command:
+      [
+        'sh',
+        '-c',
+        "until python manage.py migrate; do echo 'Waiting for MySQL...'; sleep 3; done && python manage.py runserver 0.0.0.0:3001",
+      ]
+
+  mysql:
+    container_name: mysql
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - '3307:3306'
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - bot_network
+
+  front:
+    build:
+      context: ./front
+      dockerfile: dockerfile.front
+    ports:
+      - '3000:3000'
+    networks:
+      - bot_network
+
+  bot_telegram:
+    build:
+      context: ./bot_telegram
+      dockerfile: dockerfile.bot
+    networks:
+      - bot_network
+
+networks:
+  bot_network:
+    driver: bridge
