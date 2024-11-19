@@ -11,6 +11,7 @@ from api.models.order_model import Order
 from api.models.product_model import Product
 from api.models.cart_model import Cart
 from api.models.cart_item_model import CartItem
+from api.models.address_model import Address
 
 
 from .serializers import UserSerializer
@@ -22,6 +23,7 @@ from .serializers import OrderSerializer
 from .serializers import ProductSerializer
 from .serializers import CartItemSerializer
 from .serializers import CartSerializer
+from .serializers import AddressSerializer
 
 
 @api_view(['GET'])
@@ -166,6 +168,19 @@ def getClientByID(request, id):
     serializer = ClientSerializer(data)
     return Response(serializer.data)
   return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def getClientByTelegramID(request, telegram_user_id):
+    try:
+        # Busca pelo telegram_user_id no banco de dados
+        client = Client.objects.get(telegram_user_id=telegram_user_id)
+    except Client.DoesNotExist:
+        return Response({"error": "Client not found"}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    serializer = ClientSerializer(client)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -459,7 +474,7 @@ def getProductsByCategory(request, category_id):
 def getCart(request):
     if request.method == 'GET':
         products = Cart.objects.all()
-        serializer = CartSerializer(Cart, many=True)
+        serializer = CartSerializer(products, many=True)  # Passa o queryset 'products'
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
@@ -476,26 +491,35 @@ def getCartById(request, client_id):
 
 @api_view(['POST'])
 def addToCart(request, client_id):
+    try:
+        client = Client.objects.get(id=client_id)  # Verifica se o cliente existe
+    except Client.DoesNotExist:
+        return Response({"error": "Cliente não encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
     product_id = request.data.get('product_id')
-    quantity = request.data.get('quantity')
+    quantity = request.data.get('quantity', 1)  # Padrão de quantidade: 1
 
     try:
-        cart = Cart.objects.get(client_id=client_id, is_active=True)
-    except Cart.DoesNotExist:
-        cart = Cart.objects.create(client_id=client_id)  # Cria um novo carrinho se não existir
-
-    try:
-        product = Product.objects.get(id=product_id)
+        product = Product.objects.get(id=product_id)  # Verifica se o produto existe
     except Product.DoesNotExist:
-        return Response({"detail": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"error": "Produto não encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
-    # Adiciona o produto ao carrinho (cria um item no carrinho)
+    # Obtém ou cria o carrinho ativo do cliente
+    cart, created = Cart.objects.get_or_create(client=client, is_active=True)
+
+    # Tenta encontrar o item do carrinho
     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
     if not created:
-        cart_item.quantity += quantity  # Se já existir, apenas incrementa a quantidade
+        cart_item.quantity += quantity
     cart_item.save()
 
-    return Response({"detail": "Product added to cart"}, status=status.HTTP_201_CREATED)
+    return Response({
+        "message": "Produto adicionado ao carrinho com sucesso",
+        "cart_id": cart.id,
+        "product_id": product.id,
+        "quantity": cart_item.quantity
+    }, status=status.HTTP_201_CREATED)
+
 
 @api_view(['POST'])
 def updateCartItem(request, client_id, cart_item_id):
@@ -505,11 +529,14 @@ def updateCartItem(request, client_id, cart_item_id):
         return Response({"detail": "Cart item not found"}, status=status.HTTP_404_NOT_FOUND)
 
     quantity = request.data.get('quantity')
-    if quantity:
+    
+    # Verifica se a quantidade é válida
+    if quantity is not None and quantity > 0:
         cart_item.quantity = quantity
         cart_item.save()
         return Response({"detail": "Cart item updated"}, status=status.HTTP_200_OK)
-    return Response({"detail": "Invalid data"}, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response({"detail": "Invalid quantity"}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def removeFromCart(request, client_id, cart_item_id):
@@ -541,3 +568,78 @@ def checkout(request, client_id):
 
     return Response({"detail": "Order created from cart"}, status=status.HTTP_201_CREATED)
 
+@api_view(['GET'])
+def getAddress(request):
+    addresses = Address.objects.all()
+    serializer = AddressSerializer(addresses, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET', 'DELETE'])
+def getdelAddressById(request, pk):
+    """
+    Recupera, exclui ou retorna erro 404 se o endereço com ID específico não for encontrado.
+    """
+    try:
+        address = Address.objects.get(pk=pk)
+    except Address.DoesNotExist:
+        return Response({'error': 'Endereço não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = AddressSerializer(address)
+        return Response(serializer.data)
+    
+    elif request.method == 'DELETE':
+        address.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+# POST - Criação de novo endereço
+@api_view(['POST'])
+def createAddress(request):
+    """
+    Cria um novo endereço.
+    """
+    serializer = AddressSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# PUT - Atualização do endereço existente
+@api_view(['PUT'])
+def updateAddress(request, pk):
+    """
+    Atualiza o endereço existente pelo ID.
+    """
+    try:
+        address = Address.objects.get(pk=pk)
+    except Address.DoesNotExist:
+        return Response({'error': 'Endereço não encontrado.'}, status=status.HTTP_404_NOT_FOUND)
+
+    serializer = AddressSerializer(address, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def getCartItems(request, client_id):
+    try:
+        # Localizar o cliente
+        client = Client.objects.get(id=client_id)
+    except Client.DoesNotExist:
+        return Response({"error": "Cliente não encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+    try:
+        # Localizar o carrinho ativo
+        cart = Cart.objects.get(client=client, is_active=True)
+    except Cart.DoesNotExist:
+        return Response({"error": "Carrinho ativo não encontrado"}, status=status.HTTP_404_NOT_FOUND)
+
+    # Obter os itens do carrinho
+    items = CartItem.objects.filter(cart=cart)
+    serializer = CartItemSerializer(items, many=True)
+
+    return Response({
+        "cart_id": cart.id,
+        "items": serializer.data
+    }, status=status.HTTP_200_OK)

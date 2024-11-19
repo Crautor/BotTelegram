@@ -9,6 +9,7 @@ from api.models.order_model import Order
 from api.models.product_model import Product
 from api.models.cart_model import Cart
 from api.models.cart_item_model import CartItem
+from api.models.address_model import Address
 
 
 
@@ -49,16 +50,26 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CartItemSerializer(serializers.ModelSerializer):
+    product_name = serializers.CharField(source='product.name', read_only=True)
+    product_price = serializers.DecimalField(source='product.price', max_digits=10, decimal_places=2, read_only=True)
+
     class Meta:
         model = CartItem
-        fields = '__all__'
+        fields = ['id', 'product', 'product_name', 'product_price', 'quantity']
 
 class CartSerializer(serializers.ModelSerializer):
-    cart_items = CartItemSerializer(many=True, read_only=True)  # Relaciona os itens do carrinho com o carrinho
+    cart_items = CartItemSerializer(many=True, read_only=True)  # Configura o relacionamento reverso
 
     class Meta:
         model = Cart
         fields = '__all__'
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = '__all__'
+
+
 
 
 
