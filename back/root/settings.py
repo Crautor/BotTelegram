@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
 ]
+
 CORS_ALLOW_HEADERS = [
     'content-type',
     'authorization',
