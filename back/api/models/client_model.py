@@ -2,9 +2,7 @@ from django.db import models
 
 class Client(models.Model):
     name = models.CharField(max_length=255)
-    phone_number = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    address = models.CharField(max_length=255)
+    telegram_user_id = models.BigIntegerField(unique=True, null=True, blank=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
