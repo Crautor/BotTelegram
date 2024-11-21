@@ -34,7 +34,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     logger.info("User %s started the conversation with ID %s.", user.first_name, telegram_user_id)
 
     # Verifica se o client_id já foi salvo no contexto
-    if "client_id" not in context.user_data:
+    if 'client_id' not in context.user_data:
         async with httpx.AsyncClient() as client:
             # Tenta buscar o cliente com o telegram_user_id
             response = await client.get(f"{BASE_API_URL}/client/{telegram_user_id}/")

@@ -24,7 +24,7 @@ VIEW_CATEGORIES, VIEW_PRODUCTS, VIEW_CART, CONFIRM_ORDER, COLLECT_NAME, COLLECT_
 CATEGORY, PRODUCT, CART, ORDER, INCREMENT, DECREMENT, CONFIRM = range(7)
 
 # Base API URL
-BASE_API_URL = "http://localhost:3001/api"
+BASE_API_URL = "http://127.0.0.1:3001/api"
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
