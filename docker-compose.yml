@@ -44,6 +44,8 @@ services:
       - bot_network
 
   bot_telegram:
+    depends_on:
+      - back
     build:
       context: ./bot_telegram
       dockerfile: dockerfile.bot

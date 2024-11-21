@@ -24,7 +24,7 @@ VIEW_CATEGORIES, VIEW_PRODUCTS, VIEW_CART, CONFIRM_ORDER, COLLECT_NAME, COLLECT_
 CATEGORY, PRODUCT, CART, ORDER, INCREMENT, DECREMENT, CONFIRM = range(7)
 
 # Base API URL
-BASE_API_URL = "http://127.0.0.1:8000/api"
+BASE_API_URL = "http://localhost:3001/api"
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
@@ -241,7 +241,7 @@ async def collect_address(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     return ConversationHandler.END
 
 def main() -> None:
-    application = Application.builder().token("7327581607:AAHG84Ie_4dR8LPSxkGP_ZAEZVZtD4NGYyw").build()
+    application = Application.builder().token("7202444496:AAG8ZSQw1S-nXsbHsnxX4h_lGB3XaJ6QzuI").build()
 
     conv_handler = ConversationHandler(
     entry_points=[CommandHandler("start", start)],
