@@ -30,7 +30,7 @@
         <nav class="flex-1 flex flex-col items-start justify-start pt-3">
           <div
             id="itemBar"
-            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300 "
+            class="w-full flex items-center px-4 py-3 hover:bg-gray-700 transition-all duration-300"
           >
             <a
               href="{% url 'clientes' %}"
@@ -114,10 +114,20 @@
         <div class="flex-1 p-6 flex items-center justify-center">
           <div class="flex flex-col gap-5 w-4/5">
             <div class="flex items-center justify-between">
-              <h2 class="text-2xl font-bold text-gray-700">Lista de Produtos</h2>
+              <h2 class="text-2xl font-bold text-gray-700">
+                Lista de Produtos
+              </h2>
               <div class="w-1/3 flex items-center justify-between">
-                <button id="openModalBtn" class="px-4 py-2 bg-sky-600 hover:bg-sky-700 rounded-lg text-white font-bold ">Adicionar Produto</button>
-                <select id="selectQuantidade" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto p-2.5">
+                <button
+                  id="openModalBtn"
+                  class="px-4 py-2 bg-sky-600 hover:bg-sky-700 rounded-lg text-white font-bold"
+                >
+                  Adicionar Produto
+                </button>
+                <select
+                  id="selectQuantidade"
+                  class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-auto p-2.5"
+                >
                   <option value="10" selected>10</option>
                   <option value="30">30</option>
                   <option value="50">50</option>
@@ -131,22 +141,58 @@
               <table class="table-auto w-full text-sm">
                 <thead class="bg-white sticky top-0 z-10">
                   <tr class="border-b border-gray-200">
-                    <th class="px-4 py-2 font-semibold text-base text-left w-1/5">ID</th>
-                    <th class="px-4 py-2 font-semibold text-base text-left w-1/5">Nome</th>
-                    <th class="px-4 py-2 font-semibold text-base text-left w-1/5">Categoria</th>
-                    <th class="px-4 py-2 font-semibold text-base text-left w-1/5">Preço</th>
-                    <th class="px-4 py-2 font-semibold text-base text-left w-1/5">Ação</th>
+                    <th
+                      class="px-4 py-2 font-semibold text-base text-left w-1/12 min-w-1/12 max-w-1/12"
+                    >
+                      ID
+                    </th>
+                    <th
+                      class="px-4 py-2 font-semibold text-base text-center w-2/12"
+                    >
+                      Foto
+                    </th>
+                    <th
+                      class="px-4 py-2 font-semibold text-base text-left w-2/12 min-w-2/12 max-w-2/12"
+                    >
+                      Nome
+                    </th>
+                    <th
+                      class="px-4 py-2 font-semibold text-base text-left w-3/12 min-w-3/12 max-w-3/12"
+                    >
+                      Descrição
+                    </th>
+                    <th
+                      class="px-4 py-2 font-semibold text-base text-left w-1/12 min-w-1/12 max-w-1/12"
+                    >
+                      Categoria
+                    </th>
+                    <th
+                      class="px-4 py-2 font-semibold text-base text-left w-1/12 min-w-1/12 max-w-1/12"
+                    >
+                      Preço
+                    </th>
+                    <th
+                      class="px-4 py-2 font-semibold text-base text-left w-2/12 min-w-2/12 max-w-2/12"
+                    >
+                      Ação
+                    </th>
                   </tr>
                 </thead>
                 <tbody id="tableBody"></tbody>
               </table>
             </div>
             <div class="flex items-center justify-end gap-2">
-              <button id="btnAnterior" class="bg-gray-600 text-white hover:bg-gray-800 hover:cursor-pointer font-bold py-2 px-4 rounded-lg">
+              <button
+                id="btnAnterior"
+                class="bg-gray-600 text-white hover:bg-gray-800 hover:cursor-pointer font-bold py-2 px-4 rounded-lg"
+              >
                 Anterior
               </button>
               <div id="paginationButtons" class="flex items-center gap-2"></div>
-              <button id="btnProximo" class="bg-gray-600 text-white hover:bg-gray-800 hover:cursor-pointer font-bold py-2 px-4 rounded-lg">
+              <button
+                id="btnProximo"
+                class="bg-gray-600 text-white hover:bg-gray-800 hover:cursor-pointer font-bold py-2 px-4 rounded-lg"
+              >
                 Próximo
               </button>
             </div>
@@ -157,34 +203,112 @@
 
     <!-- Modal para Adicionar Produto -->
     <div id="modalProduto" class="fixed inset-0 z-10 overflow-y-auto hidden">
-      <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 shadow-lg">
-        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true"></div>
+      <div
+        class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 shadow-lg"
+      >
+        <div
+          class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+          aria-hidden="true"
+        ></div>
 
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >​</span
+        >
 
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        >
           <div class="bg-gray-100 px-4 py-2 sm:px-6">
-            <h3 class="text-lg font-bold leading-6 text-gray-900">Adicionar Produto</h3>
+            <h3 class="text-lg font-bold leading-6 text-gray-900">
+              Adicionar Produto
+            </h3>
           </div>
           <div class="bg-white px-4 py-5 sm:p-6">
             <form id="formProduto" class="space-y-6">
               <div>
-                <label for="nomeProduto" class="block text-sm font-medium leading-5 text-gray-700">Nome do Produto</label>
-                <input type="text" name="nomeProduto" id="nomeProduto" autocomplete="nomeProduto" class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600">
+                <label
+                  for="nomeProduto"
+                  class="block text-sm font-medium leading-5 text-gray-700"
+                  >Nome do Produto</label
+                >
+                <input
+                  type="text"
+                  name="nomeProduto"
+                  id="nomeProduto"
+                  autocomplete="nomeProduto"
+                  class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600"
+                />
               </div>
               <div>
-                <label for="categoriaProduto" class="block text-sm font-medium leading-5 text-gray-700">Categoria</label>
-                <select name="categoriaProduto" id="categoriaProduto" class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600">
+                <label
+                  for="categoriaProduto"
+                  class="block text-sm font-medium leading-5 text-gray-700"
+                  >Categoria</label
+                >
+                <select
+                  name="categoriaProduto"
+                  id="categoriaProduto"
+                  class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600"
+                >
                   <option value="">Selecione uma categoria</option>
-                  </select>
+                </select>
               </div>
               <div>
-                <label for="precoProduto" class="block text-sm font-medium leading-5 text-gray-700">Preço</label>
-                <input type="number" name="precoProduto" id="precoProduto" autocomplete="precoProduto" class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600">
+                <label
+                  for="precoProduto"
+                  class="block text-sm font-medium leading-5 text-gray-700"
+                  >Preço</label
+                >
+                <input
+                  type="number"
+                  name="precoProduto"
+                  id="precoProduto"
+                  autocomplete="precoProduto"
+                  class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600"
+                />
+              </div>
+              <div>
+                <label
+                  for="descricaoProduto"
+                  class="block text-sm font-medium leading-5 text-gray-700"
+                  >Descrição</label
+                >
+                <textarea
+                  name="descricaoProduto"
+                  id="descricaoProduto"
+                  class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600"
+                ></textarea>
+              </div>
+
+              <div>
+                <label
+                  for="photo_urlProduto"
+                  class="block text-sm font-medium leading-5 text-gray-700"
+                  >URL da Foto</label
+                >
+                <input
+                  type="text"
+                  name="photo_urlProduto"
+                  id="photo_urlProduto"
+                  class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600"
+                />
               </div>
               <div class="flex items-center justify-end gap-5">
-                <button type="button" class="px-4 py-2 bg-gray-400 hover:bg-gray-500 rounded-lg text-white font-bold" id="closeModalBtnProduto">Fechar</button>
-                <button type="submit" class="px-4 py-2 bg-sky-600 hover:bg-sky-700 rounded-lg text-white font-bold">Salvar</button>
+                <button
+                  type="button"
+                  class="px-4 py-2 bg-gray-400 hover:bg-gray-500 rounded-lg text-white font-bold"
+                  id="closeModalBtnProduto"
+                >
+                  Fechar
+                </button>
+                <button
+                  type="submit"
+                  class="px-4 py-2 bg-sky-600 hover:bg-sky-700 rounded-lg text-white font-bold"
+                >
+                  Salvar
+                </button>
               </div>
             </form>
           </div>
@@ -193,36 +317,119 @@
     </div>
 
     <!-- Modal para Editar Produto -->
-    <div id="modalEditarProduto" class="fixed inset-0 z-10 overflow-y-auto hidden">
-      <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 shadow-lg">
-        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" aria-hidden="true"></div>
+    <div
+      id="modalEditarProduto"
+      class="fixed inset-0 z-10 overflow-y-auto hidden"
+    >
+      <div
+        class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0 shadow-lg"
+      >
+        <div
+          class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
+          aria-hidden="true"
+        ></div>
 
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">​</span>
+        <span
+          class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          aria-hidden="true"
+          >​</span
+        >
 
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+        >
           <div class="bg-gray-100 px-4 py-2 sm:px-6">
-            <h3 class="text-lg font-bold leading-6 text-gray-900">Editar Produto</h3>
+            <h3 class="text-lg font-bold leading-6 text-gray-900">
+              Editar Produto
+            </h3>
           </div>
           <div class="bg-white px-4 py-5 sm:p-6">
             <form id="formEditarProduto" class="space-y-6">
               <div>
-                <input type="hidden" name="produtoId" id="produtoId">
-                <label for="nomeProduto" class="block text-sm font-medium leading-5 text-gray-700">Nome do Produto</label>
-                <input type="text" name="nomeProduto" id="nomeProdutoEdit" autocomplete="nomeProduto" class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600">
+                <input type="hidden" name="produtoId" id="produtoId" />
+                <label
+                  for="nomeProduto"
+                  class="block text-sm font-medium leading-5 text-gray-700"
+                  >Nome do Produto</label
+                >
+                <input
+                  type="text"
+                  name="nomeProduto"
+                  id="nomeProdutoEdit"
+                  autocomplete="nomeProduto"
+                  class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600"
+                />
               </div>
               <div>
-                <label for="categoriaProduto" class="block text-sm font-medium leading-5 text-gray-700">Categoria</label>
-                <select name="categoriaProduto" id="categoriaProdutoEdit" class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600">
-                  <option value="">Selecione uma categoria</option>
-                  </select>
+                <label
+                  for="descricaoProdutoEdit"
+                  class="block text-sm font-medium leading-5 text-gray-700"
+                  >Descrição</label
+                >
+                <textarea
+                  name="descricaoProduto"
+                  id="descricaoProdutoEdit"
+                  class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600"
+                ></textarea>
+              </div>
+
+              <div>
+                <label
+                  for="photo_urlProdutoEdit"
+                  class="block text-sm font-medium leading-5 text-gray-700"
+                  >URL da Foto</label
+                >
+                <input
+                  type="text"
+                  name="photo_urlProduto"
+                  id="photo_urlProdutoEdit"
+                  class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600"
+                />
+              </div>
+
+              <div>
+                <label
+                  for="categoriaProdutoEdit"
+                  class="block text-sm font-medium leading-5 text-gray-700"
+                  >Categoria</label
+                >
+                <select
+                  name="categoriaProduto"
+                  id="categoriaProdutoEdit"
+                  class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600"
+                >
+                  <!-- Opções serão adicionadas dinamicamente -->
+                </select>
               </div>
               <div>
-                <label for="precoProduto" class="block text-sm font-medium leading-5 text-gray-700">Preço</label>
-                <input type="number" name="precoProduto" id="precoProdutoEdit" autocomplete="precoProduto" class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600">
+                <label
+                  for="precoProduto"
+                  class="block text-sm font-medium leading-5 text-gray-700"
+                  >Preço</label
+                >
+                <input
+                  type="number"
+                  step="0.01"
+                  name="precoProduto"
+                  id="precoProdutoEdit"
+                  autocomplete="precoProduto"
+                  class="py-1 px-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 border border-gray-600"
+                />
               </div>
               <div class="flex items-center justify-end gap-5">
-                <button type="button" class="px-4 py-2 bg-gray-400 hover:bg-gray-500 rounded-lg text-white font-bold" id="closeModalBtnEditarProduto">Fechar</button>
-                <button type="submit" class="px-4 py-2 bg-sky-600 hover:bg-sky-700 rounded-lg text-white font-bold">Salvar</button>
+                <button
+                  type="button"
+                  class="px-4 py-2 bg-gray-400 hover:bg-gray-500 rounded-lg text-white font-bold"
+                  id="closeModalBtnEditarProduto"
+                >
+                  Fechar
+                </button>
+                <button
+                  type="submit"
+                  class="px-4 py-2 bg-sky-600 hover:bg-sky-700 rounded-lg text-white font-bold"
+                >
+                  Salvar
+                </button>
               </div>
             </form>
           </div>
@@ -230,314 +437,588 @@
       </div>
     </div>
 
-      <!-- Script for Generating Data -->
-      <script>
-        const nomes = ["Camiseta", "Calça Jeans", "Tênis", "Notebook", "Celular", "Fones de Ouvido", "Smartwatch", "Cafeteira", "Geladeira", "Televisão"];
-        const categorias = ["Eletrônicos", "Livros", "Roupas", "Alimentos", "Brinquedos", "Esportes", "Beleza", "Casa", "Informática", "Música"];
+    <!-- Script for Generating Data -->
+    <script>
+      // Módulo de Requisições à API
+      const API_BASE_URL = 'http://localhost:3001/api';
 
-        let produtos = [];
-        let nextProductId = 1;
-
-        function gerarDadosAleatorios(quantidade) {
-          const dados = [];
-          for (let i = 0; i < quantidade; i++) {
-            const id = i + 1;
-            const nome = nomes[Math.floor(Math.random() * nomes.length)];
-            const categoria = categorias[Math.floor(Math.random() * categorias.length)];
-            const preco = Math.floor(Math.random() * 1000) + 1;
-            dados.push({ id, nome, categoria, preco });
-          }
-          return dados;
+      async function fetchCategories() {
+        try {
+          const response = await fetch(`${API_BASE_URL}/category`, {
+            credentials: 'include',
+          });
+          if (!response.ok)
+            throw new Error('Erro na requisição: ' + response.status);
+          const data = await response.json();
+          atualizarSelectCategorias(data);
+          listsProducts(data);
+          return data;
+        } catch (error) {
+          console.error('Erro ao buscar categorias:', error);
+          return null;
         }
-  
-        // Inicializa com dados aleatórios (opcional)
-        produtos = gerarDadosAleatorios(100);
-        nextProductId = produtos.length + 1; // Define o próximo ID para novo produto
+      }
 
-        function adicionarProduto(nome, categoria, preco) {
-          const novoProduto = {
-            id: nextProductId++,
-            nome: nome,
-            categoria: categoria,
-            preco: preco
+      async function fetchProducts() {
+        try {
+          const response = await fetch(`${API_BASE_URL}/product`, {
+            credentials: 'include',
+          });
+          if (!response.ok)
+            throw new Error('Erro ao buscar produtos: ' + response.status);
+          return await response.json();
+        } catch (error) {
+          console.error('Erro ao buscar produtos:', error);
+        }
+      }
+
+      async function fetchProductById(id) {
+        try {
+          const response = await fetch(`${API_BASE_URL}/product/${id}`, {
+            credentials: 'include',
+          });
+          if (!response.ok)
+            throw new Error('Erro ao buscar produto: ' + response.status);
+          return await response.json();
+        } catch (error) {
+          console.error('Erro ao buscar produto por ID:', error);
+        }
+      }
+
+      async function createProduct(newProduct) {
+        try {
+          const response = await fetch(`${API_BASE_URL}/product/create/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newProduct),
+            credentials: 'include',
+          });
+          if (!response.ok)
+            throw new Error('Erro ao criar produto: ' + response.status);
+          return await response.json();
+        } catch (error) {
+          console.error('Erro ao criar produto:', error);
+        }
+      }
+
+      async function listsProducts(data) {
+        let categorias = data;
+        let produtos = await fetchProducts();
+
+        let produtosFixed = produtos.map((produto) => {
+          let categoria = categorias.find(
+            (categoria) => categoria.id === produto.category
+          );
+          return {
+            id: produto.id,
+            nome: produto.name,
+            descricao: produto.description,
+            photo_url: produto.photo_url,
+            categoria: categoria ? categoria.name : 'Categoria não encontrada',
+            preco: produto.price,
           };
-          produtos.push(novoProduto);
-          atualizarTabela(); // Atualiza a tabela após adicionar
-        }
+        });
+        atualizarTabela(produtosFixed);
+      }
 
-        function editarProduto(produtoId, novoNome, novaCategoria, novoPreco) {
-          const produtoIndex = produtos.findIndex(p => p.id === produtoId);
-          if (produtoIndex !== -1) {
-            produtos[produtoIndex].nome = novoNome;
-            produtos[produtoIndex].categoria = novaCategoria;
-            produtos[produtoIndex].preco = novoPreco;
-            atualizarTabela(); // Atualiza a tabela após editar
+      async function updateProduct(updatedProduct) {
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/product/update/${updatedProduct.id}`,
+            {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(updatedProduct),
+              credentials: 'include', // Se necessário para autenticação
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json(); // Tente obter informações de erro do servidor
+            const errorMessage =
+              errorData.message ||
+              `Erro ao atualizar produto: ${response.status}`;
+            throw new Error(errorMessage); // Lance um erro com a mensagem do servidor, se disponível
           }
-        }
 
-        function removerProduto(produtoId) {
-        const produtoIndex = produtos.findIndex(p => p.id === produtoId);
+          return await response.json(); // Retorna os dados atualizados, se houver
+        } catch (error) {
+          console.error('Erro ao atualizar produto:', error);
+          // Exibir uma mensagem de erro ao usuário, por exemplo, usando um alert ou toast
+          alert(error.message); // Exibe a mensagem de erro do servidor, se capturada
+          return null;
+        }
+      }
+
+      // Módulo de Manipulação de Dados
+      let nextProductId = 1;
+      let produtos = [];
+
+      fetchCategories();
+
+      // Inicializa com dados aleatórios (opcional)
+      nextProductId = produtos.length + 1; // Define o próximo ID para novo produto
+
+      function removerProduto(produtoId) {
+        const produtoIndex = produtos.findIndex((p) => p.id === produtoId);
         if (produtoIndex !== -1) {
           produtos.splice(produtoIndex, 1);
           atualizarTabela(); // Atualiza a tabela após remover
         }
       }
 
-        // Script for Pagination
-        let paginaAtual = 1;
-        let quantidadePorPagina = 10;
+      // Script for Pagination
+      let paginaAtual = 1;
+      let quantidadePorPagina = 10;
 
-        const tableBody = document.getElementById("tableBody");
-        const selectQuantidade = document.getElementById("selectQuantidade");
-        const btnAnterior = document.getElementById("btnAnterior");
-        const btnProximo = document.getElementById("btnProximo");
-        const openModalBtn = document.getElementById("openModalBtn");
-        const closeModalBtn = document.getElementById("closeModalBtn");
-        const modal = document.getElementById("modal");
-        const modalProduto = document.getElementById("modalProduto");
-        const modalEditarProduto = document.getElementById("modalEditarProduto");
-        const closeModalBtnProduto = document.getElementById("closeModalBtnProduto");
-        const closeModalBtnEditarProduto = document.getElementById("closeModalBtnEditarProduto");
-        const nomeProdutoInput = document.getElementById("nomeProduto");
-        const categoriaProdutoSelect = document.getElementById("categoriaProduto");
-        const precoProdutoInput = document.getElementById("precoProduto");
-        const nomeProdutoEditInput = document.getElementById("nomeProdutoEdit");
-        const categoriaProdutoEditSelect = document.getElementById("categoriaProdutoEdit");
-        const precoProdutoEditInput = document.getElementById("precoProdutoEdit");
-        const produtoIdInput = document.getElementById("produtoId");
-        const formProduto = document.getElementById("formProduto");
-        const formEditarProduto = document.getElementById("formEditarProduto");
+      const tableBody = document.getElementById('tableBody');
+      const selectQuantidade = document.getElementById('selectQuantidade');
+      const btnAnterior = document.getElementById('btnAnterior');
+      const btnProximo = document.getElementById('btnProximo');
+      const openModalBtn = document.getElementById('openModalBtn');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const modal = document.getElementById('modal');
+      const modalProduto = document.getElementById('modalProduto');
+      const modalEditarProduto = document.getElementById('modalEditarProduto');
+      const closeModalBtnProduto = document.getElementById(
+        'closeModalBtnProduto'
+      );
+      const closeModalBtnEditarProduto = document.getElementById(
+        'closeModalBtnEditarProduto'
+      );
+      const nomeProdutoInput = document.getElementById('nomeProduto');
+      const categoriaProdutoSelect =
+        document.getElementById('categoriaProduto');
+      const precoProdutoInput = document.getElementById('precoProduto');
+      const nomeProdutoEditInput = document.getElementById('nomeProdutoEdit');
+      const categoriaProdutoEditSelect = document.getElementById(
+        'categoriaProdutoEdit'
+      );
+      const precoProdutoEditInput = document.getElementById('precoProdutoEdit');
+      const produtoIdInput = document.getElementById('produtoId');
+      const formProduto = document.getElementById('formProduto');
+      const formEditarProduto = document.getElementById('formEditarProduto');
 
-        // Inicializa o select de categorias no modal de adicionar produto
-        function atualizarSelectCategorias() {
-          const categoriaProdutoSelect = document.getElementById("categoriaProduto");
-          const categoriaProdutoEditSelect = document.getElementById("categoriaProdutoEdit");
+      // Inicializa o select de categorias no modal de adicionar produto
+      function atualizarSelectCategorias(categorias) {
+        const categoriaProdutoSelect =
+          document.getElementById('categoriaProduto');
+        const categoriaProdutoEditSelect = document.getElementById(
+          'categoriaProdutoEdit'
+        );
 
-          categoriaProdutoSelect.innerHTML = ''; // Limpa o select
-          categoriaProdutoEditSelect.innerHTML = ''; // Limpa o select
+        categoriaProdutoSelect.innerHTML = ''; // Limpa o select
+        categoriaProdutoEditSelect.innerHTML = ''; // Limpa o select
 
-          categorias.forEach((categoria, index) => {
-            const option = document.createElement('option');
-            option.value = categoria;
-            option.text = categoria;
-            categoriaProdutoSelect.appendChild(option);
-            categoriaProdutoEditSelect.appendChild(option.cloneNode(true)); // Clona a opção para o modal de edição
-          });
+        categorias.forEach((categoria, index) => {
+          const option = document.createElement('option');
+          option.value = categoria.id;
+          option.text = categoria.name;
+          categoriaProdutoSelect.appendChild(option);
+          categoriaProdutoEditSelect.appendChild(option.cloneNode(true)); // Clona a opção para o modal de edição
+        });
+      }
+      async function deleteProduct(productId) {
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/product/delete/${productId}`,
+            {
+              method: 'DELETE',
+              credentials: 'include', // Se você usar cookies ou autenticação baseada em sessão
+            }
+          );
+
+          if (!response.ok) {
+            // Lidar com a resposta de erro da API (ex: 404 Not Found, 500 Internal Server Error)
+            const errorData = await response.json(); // Tentar obter uma mensagem de erro do servidor
+            const errorMessage =
+              errorData.message ||
+              `Erro ao excluir produto: ${response.status}`;
+            throw new Error(errorMessage);
+          }
+
+          // Retornar a resposta (se a API retornar algo) ou simplesmente um valor booleano indicando sucesso.
+          return true; // ou return await response.json();
+        } catch (error) {
+          console.error('Erro ao excluir produto:', error);
+          alert('Erro ao excluir produto: ' + error.message); // Mostra a mensagem do erro para o usuário
+          return false; // Indica falha na exclusão
         }
+      }
 
-        function atualizarTabela() {
-          tableBody.innerHTML = ''; 
-          const inicio = (paginaAtual - 1) * quantidadePorPagina;
-          const fim = inicio + quantidadePorPagina;
-          const produtosNaPagina = produtos.slice(inicio, fim);
+      function atualizarTabela(produtosFixed) {
+        tableBody.innerHTML = '';
+        const inicio = (paginaAtual - 1) * quantidadePorPagina;
+        const fim = inicio + quantidadePorPagina;
 
-          produtosNaPagina.forEach((item, index) => {
-            const row = document.createElement('tr');
-            row.classList.add(index % 2 === 0 ? 'bg-white' : 'bg-gray-100', 'border-b', 'border-gray-200');
+        const produtosNaPagina = produtosFixed
+          ? produtosFixed.slice(inicio, fim)
+          : null;
 
-            row.innerHTML = `
-              <td class="px-4 py-2">${item.id}</td>
-              <td class="px-4 py-2">${item.nome}</td>
-              <td class="px-4 py-2">${item.categoria}</td>
-              <td class="px-4 py-2">R$ ${item.preco} </td>
-              <td class="px-4 py-2">
-                <button data-produto-id="${item.id}" data-produto-nome="${item.nome}" data-produto-categoria="${item.categoria}" data-produto-preco="${item.preco}" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded edit-btn">Editar</button>
-                <button data-produto-id="${item.id}" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded delete-btn">Excluir</button>
-              </td>`;
-            tableBody.appendChild(row);
-          });
-
-          // Adicionando eventos de clique aos botões "Editar" e "Excluir"
-          const editButtons = tableBody.querySelectorAll('.edit-btn');
-          editButtons.forEach(button => {
-            button.addEventListener('click', handleEditClick);
-          });
-
-          const deleteButtons = tableBody.querySelectorAll('.delete-btn');
-          deleteButtons.forEach(button => {
-            button.addEventListener('click', handleDeleteClick);
-          });
-
-          btnAnterior.disabled = paginaAtual === 1;
-          btnProximo.disabled = paginaAtual * quantidadePorPagina >= produtos.length;
-
-          atualizarBotoesPaginacao();
-        }
-
-        function atualizarBotoesPaginacao() {
-          const paginationButtons = document.getElementById("paginationButtons");
-          paginationButtons.innerHTML = "";
-
-          const totalPaginas = Math.ceil(produtos.length / quantidadePorPagina);
-
-          // Botão para a primeira página
-          const btnPrimeiro = document.createElement("button");
-          btnPrimeiro.textContent = "1";
-          btnPrimeiro.classList.add("bg-gray-300", "text-black", "hover:bg-gray-400", "hover:cursor-pointer", "font-bold", "py-2", "px-4", "rounded-lg");
-          if (paginaAtual === 1) {
-            btnPrimeiro.classList.add("hidden");
-          }
-          btnPrimeiro.addEventListener("click", () => irParaPagina(1));
-          paginationButtons.appendChild(btnPrimeiro);
-
-          // Botão para a página atual
-          const btnAtual = document.createElement("button");
-          btnAtual.textContent = paginaAtual;
-          btnAtual.classList.add("bg-gray-400", "text-black", "hover:bg-gray-400", "font-bold", "py-2", "px-4", "rounded-lg");
-          paginationButtons.appendChild(btnAtual);
-
-          // Botão para a próxima página
-          const btnProxima = document.createElement("button");
-
-          btnProxima.textContent = paginaAtual + 1;
-          btnProxima.classList.add("bg-gray-300", "text-black", "hover:bg-gray-400", "hover:cursor-pointer", "font-bold", "py-2", "px-4", "rounded-lg");
-          if (paginaAtual + 1 > totalPaginas) {
-            btnProxima.classList.add("hidden");
-            btnProxima.classList.remove("flex");
-          } else {
-            btnProxima.classList.add("flex");
-            btnProxima.classList.remove("hidden");
-            btnProxima.addEventListener("click", () => irParaPagina(paginaAtual + 1));
-          }
-          paginationButtons.appendChild(btnProxima);
-
-          // Botão "..."
-          const btnPontos = document.createElement("button");
-          btnPontos.textContent = "...";
-          btnPontos.classList.add("bg-gray-300", "text-black", "hover:cursor-default", "font-bold", "py-2", "px-4", "rounded-lg");
-          if (totalPaginas > 5) {
-            paginationButtons.appendChild(btnPontos);
-          }
-          if (paginaAtual == totalPaginas) {
-            btnPontos.classList.add("hidden");
-          } else {
-            btnPontos.classList.remove("hidden");
-          }
-
-          // Botão para a última página
-          const btnUltimo = document.createElement("button");
-          btnUltimo.textContent = totalPaginas;
-          btnUltimo.classList.add("bg-gray-300", "text-black", "hover:bg-gray-400", "hover:cursor-pointer", "font-bold", "py-2", "px-4", "rounded-lg");
-          if (paginaAtual === totalPaginas) {
-            btnUltimo.classList.add("hidden");
-          } else {
-            btnUltimo.classList.remove("hidden");
-          }
-          if (totalPaginas < paginaAtual + 1) {
-            btnUltimo.classList.add("hidden");
-          } else {
-            btnUltimo.classList.remove("hidden");
-          }
-
-          btnUltimo.addEventListener("click", () => irParaPagina(totalPaginas));
-          paginationButtons.appendChild(btnUltimo);
-        }
-
-        function irParaPagina(pagina) {
-          paginaAtual = pagina;
-          atualizarTabela();
-        }
-
-        btnProximo.addEventListener("click", () => {
-          if (paginaAtual * quantidadePorPagina < produtos.length) {
-            paginaAtual++;
-            atualizarTabela();
-          }
+        produtosNaPagina.forEach((item, index) => {
+          const row = document.createElement('tr');
+          row.classList.add(
+            index % 2 === 0 ? 'bg-white' : 'bg-gray-100',
+            'border-b',
+            'border-gray-200'
+          );
+          row.innerHTML = `
+                    <td class="px-4 py-2 ">${item.id}</td>
+                    <td class="px-4 py-2 flex items-center justify-center">
+                    <img class="w-32 h-32 object-cover rounded " src="${item.photo_url}">
+                    </td>
+                    <td class="px-4 py-2 break-words	">${item.nome}</td>
+                    <td class="px-4 py-2 break-words	">${item.descricao}</td>
+                    <td class="px-4 py-2 ">${item.categoria}</td>
+                    <td class="px-4 py-2">R$ ${item.preco} </td>
+                    <td class="px-4 py-2">
+                      <button data-produto-id="${item.id}" data-produto-nome="${item.nome}" data-produto-categoria="${item.categoria}" data-produto-preco="${item.preco}" data-produto-descricao="${item.descricao}" data-produto-photourl="${item.photo_url}" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded edit-btn">Editar</button>
+                      <button data-produto-id="${item.id}" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded delete-btn">Excluir</button>
+                    </td>`;
+          tableBody.appendChild(row);
         });
 
-        btnAnterior.addEventListener("click", () => {
-          if (paginaAtual > 1) {
-            paginaAtual--;
-            atualizarTabela();
-          }
+        // Adicionando eventos de clique aos botões "Editar" e "Excluir"
+        const editButtons = tableBody.querySelectorAll('.edit-btn');
+        editButtons.forEach((button) => {
+          button.addEventListener('click', handleEditClick);
         });
 
-        selectQuantidade.addEventListener("change", () => {
-          quantidadePorPagina = parseInt(selectQuantidade.value);
-          paginaAtual = 1;
-          atualizarTabela();
-        });
-
-        openModalBtn.addEventListener("click", () => {
-          modalProduto.classList.remove("hidden");
-          atualizarSelectCategorias(); // Atualiza o select de categorias
-        });
-
-        closeModalBtnProduto.addEventListener("click", () => {
-          modalProduto.classList.add("hidden");
-          nomeProdutoInput.value = '';
-          categoriaProdutoSelect.value = ''; // Limpa o select
-          precoProdutoInput.value = '';
-        });
-
-        closeModalBtnEditarProduto.addEventListener("click", () => {
-          modalEditarProduto.classList.add("hidden");
-          nomeProdutoEditInput.value = '';
-          categoriaProdutoEditSelect.value = ''; // Limpa o select
-          precoProdutoEditInput.value = '';
-          produtoIdInput.value = '';
-        });
-
-        function handleEditClick(event) {
-          const button = event.target;
-          const produtoId = button.dataset.produtoId;
-          const produtoNome = button.dataset.produtoNome;
-          const produtoCategoria = button.dataset.produtoCategoria;
-          const produtoPreco = button.dataset.produtoPreco;
-
-          produtoIdInput.value = produtoId;
-          nomeProdutoEditInput.value = produtoNome;
-          categoriaProdutoEditSelect.value = produtoCategoria;
-          precoProdutoEditInput.value = produtoPreco;
-
-          modalEditarProduto.classList.remove("hidden");
-          atualizarSelectCategorias(); // Atualiza o select de categorias
-        }
-
-        function handleDeleteClick(event) {
+        async function handleDeleteClick(event) {
+          // Adicionar 'async'
           const button = event.target;
           const produtoId = parseInt(button.dataset.produtoId);
-          removerProduto(produtoId);
+
+          try {
+            if (confirm('Tem certeza que deseja excluir este produto?')) {
+              // Confirmação
+              const success = await deleteProduct(produtoId); // Aguarda a resposta do servidor
+
+              if (success) {
+                // Recarrega os produtos e atualiza a tabela
+                const categorias = await fetchCategories();
+                listsProducts(categorias);
+                atualizarTabela();
+              } else {
+                // Lidar com erro na exclusão (exibir uma mensagem, etc.)
+                console.error(
+                  'A exclusão falhou. Verifique os logs do console para detalhes.'
+                );
+              }
+            }
+          } catch (error) {
+            // Trate erros de requisição aqui
+            console.error('Erro na requisição de exclusão:', error);
+            alert('Erro ao excluir o produto. Verifique os logs do console.'); // Exibe mensagem de erro para o usuário
+          }
         }
 
-        // Eventos de envio de formulários
-        formProduto.addEventListener("submit", function(event) {
-          event.preventDefault();
-          const nomeProduto = nomeProdutoInput.value;
-          const categoriaProduto = categoriaProdutoSelect.value;
-          const precoProduto = precoProdutoInput.value;
-          adicionarProduto(nomeProduto, categoriaProduto, precoProduto);
-          modalProduto.classList.add("hidden");
-          nomeProdutoInput.value = '';
-          categoriaProdutoSelect.value = ''; // Limpa o select
-          precoProdutoInput.value = '';
+        // Dentro da função atualizarTabela, adicione o event listener 'async':
+        const deleteButtons = tableBody.querySelectorAll('.delete-btn');
+        deleteButtons.forEach((button) => {
+          button.addEventListener('click', async (event) => {
+            await handleDeleteClick(event);
+          });
         });
 
-        formEditarProduto.addEventListener("submit", function(event) {
-          event.preventDefault();
-          const produtoId = parseInt(produtoIdInput.value);
-          const novoNome = nomeProdutoEditInput.value;
-          const novaCategoria = categoriaProdutoEditSelect.value;
-          const novoPreco = precoProdutoEditInput.value;
-          editarProduto(produtoId, novoNome, novaCategoria, novoPreco);
-          modalEditarProduto.classList.add("hidden");
-          nomeProdutoEditInput.value = '';
-          categoriaProdutoEditSelect.value = ''; // Limpa o select
-          precoProdutoEditInput.value = '';
-          produtoIdInput.value = '';
-        });
+        btnAnterior.disabled = paginaAtual === 1;
+        btnProximo.disabled =
+          paginaAtual * quantidadePorPagina >= produtos.length;
 
-        atualizarTabela(); // Inicializa a tabela
-      </script>
+        atualizarBotoesPaginacao();
+      }
+
+      function atualizarBotoesPaginacao() {
+        const paginationButtons = document.getElementById('paginationButtons');
+        paginationButtons.innerHTML = '';
+
+        const totalPaginas = Math.ceil(produtos.length / quantidadePorPagina);
+
+        // Botão para a primeira página
+        const btnPrimeiro = document.createElement('button');
+        btnPrimeiro.textContent = '1';
+        btnPrimeiro.classList.add(
+          'bg-gray-300',
+          'text-black',
+          'hover:bg-gray-400',
+          'hover:cursor-pointer',
+          'font-bold',
+          'py-2',
+          'px-4',
+          'rounded-lg'
+        );
+        if (paginaAtual === 1) {
+          btnPrimeiro.classList.add('hidden');
+        }
+        btnPrimeiro.addEventListener('click', () => irParaPagina(1));
+        paginationButtons.appendChild(btnPrimeiro);
+
+        // Botão para a página atual
+        const btnAtual = document.createElement('button');
+        btnAtual.textContent = paginaAtual;
+        btnAtual.classList.add(
+          'bg-gray-400',
+          'text-black',
+          'hover:bg-gray-400',
+          'font-bold',
+          'py-2',
+          'px-4',
+          'rounded-lg'
+        );
+        paginationButtons.appendChild(btnAtual);
+
+        // Botão para a próxima página
+        const btnProxima = document.createElement('button');
+
+        btnProxima.textContent = paginaAtual + 1;
+        btnProxima.classList.add(
+          'bg-gray-300',
+          'text-black',
+          'hover:bg-gray-400',
+          'hover:cursor-pointer',
+          'font-bold',
+          'py-2',
+          'px-4',
+          'rounded-lg'
+        );
+        if (paginaAtual + 1 > totalPaginas) {
+          btnProxima.classList.add('hidden');
+          btnProxima.classList.remove('flex');
+        } else {
+          btnProxima.classList.add('flex');
+          btnProxima.classList.remove('hidden');
+          btnProxima.addEventListener('click', () =>
+            irParaPagina(paginaAtual + 1)
+          );
+        }
+        paginationButtons.appendChild(btnProxima);
+
+        // Botão "..."
+        const btnPontos = document.createElement('button');
+        btnPontos.textContent = '...';
+        btnPontos.classList.add(
+          'bg-gray-300',
+          'text-black',
+          'hover:cursor-default',
+          'font-bold',
+          'py-2',
+          'px-4',
+          'rounded-lg'
+        );
+        if (totalPaginas > 5) {
+          paginationButtons.appendChild(btnPontos);
+        }
+        if (paginaAtual == totalPaginas) {
+          btnPontos.classList.add('hidden');
+        } else {
+          btnPontos.classList.remove('hidden');
+        }
+
+        // Botão para a última página
+        const btnUltimo = document.createElement('button');
+        btnUltimo.textContent = totalPaginas;
+        btnUltimo.classList.add(
+          'bg-gray-300',
+          'text-black',
+          'hover:bg-gray-400',
+          'hover:cursor-pointer',
+          'font-bold',
+          'py-2',
+          'px-4',
+          'rounded-lg'
+        );
+        if (paginaAtual === totalPaginas) {
+          btnUltimo.classList.add('hidden');
+        } else {
+          btnUltimo.classList.remove('hidden');
+        }
+        if (totalPaginas < paginaAtual + 1) {
+          btnUltimo.classList.add('hidden');
+        } else {
+          btnUltimo.classList.remove('hidden');
+        }
+
+        btnUltimo.addEventListener('click', () => irParaPagina(totalPaginas));
+        paginationButtons.appendChild(btnUltimo);
+      }
+
+      function irParaPagina(pagina) {
+        paginaAtual = pagina;
+        atualizarTabela();
+      }
+
+      btnProximo.addEventListener('click', () => {
+        if (paginaAtual * quantidadePorPagina < produtos.length) {
+          paginaAtual++;
+          atualizarTabela();
+        }
+      });
+
+      btnAnterior.addEventListener('click', () => {
+        if (paginaAtual > 1) {
+          paginaAtual--;
+          atualizarTabela();
+        }
+      });
+
+      selectQuantidade.addEventListener('change', () => {
+        quantidadePorPagina = parseInt(selectQuantidade.value);
+        paginaAtual = 1;
+        atualizarTabela();
+      });
+
+      openModalBtn.addEventListener('click', () => {
+        modalProduto.classList.remove('hidden');
+        fetchCategories();
+      });
+
+      closeModalBtnProduto.addEventListener('click', () => {
+        modalProduto.classList.add('hidden');
+        nomeProdutoInput.value = '';
+        categoriaProdutoSelect.value = ''; // Limpa o select
+        precoProdutoInput.value = '';
+      });
+
+      closeModalBtnEditarProduto.addEventListener('click', () => {
+        modalEditarProduto.classList.add('hidden');
+        nomeProdutoEditInput.value = '';
+        categoriaProdutoEditSelect.value = ''; // Limpa o select
+        precoProdutoEditInput.value = '';
+        produtoIdInput.value = '';
+      });
+
+      function handleEditClick(event) {
+        const button = event.target;
+        const produtoId = button.dataset.produtoId;
+        const produtoNome = button.dataset.produtoNome;
+        const produtoCategoria = button.dataset.produtoCategoria;
+        const produtoPreco = button.dataset.produtoPreco;
+        const produtoDescricao = button.dataset.produtoDescricao;
+        const produtoPhotoUrl = button.dataset.produtoPhotourl;
+
+        produtoIdInput.value = produtoId;
+        nomeProdutoEditInput.value = produtoNome;
+        categoriaProdutoEditSelect.value = produtoCategoria;
+        precoProdutoEditInput.value = produtoPreco;
+        descricaoProdutoEdit.value = produtoDescricao;
+        photo_urlProdutoEdit.value = produtoPhotoUrl;
+
+        modalEditarProduto.classList.remove('hidden');
+        fetchCategories(); // Atualiza o select de categorias
+      }
+
+      function handleDeleteClick(event) {
+        const button = event.target;
+        const produtoId = parseInt(button.dataset.produtoId);
+        removerProduto(produtoId);
+      }
+
+      // Eventos de envio de formulários
+      formProduto.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const nomeProduto = nomeProdutoInput.value;
+        const categoriaProdutoId = parseInt(categoriaProdutoSelect.value); // ID da categoria (como número)
+        const precoProduto = parseFloat(precoProdutoInput.value); // parseFloat para garantir que é um número
+
+        const descricaoProdutoElement =
+          document.getElementById('descricaoProduto');
+        const photoUrlProdutoElement =
+          document.getElementById('photo_urlProduto');
+
+        const descricaoProduto = descricaoProdutoElement.value;
+        const photoUrlProduto = photoUrlProdutoElement.value;
+
+        const newProduct = {
+          name: nomeProduto,
+          category: categoriaProdutoId,
+          price: precoProduto,
+          description: descricaoProduto, // Ou pegue a descrição de um input, se houver
+          photo_url: photoUrlProduto, // Ou pegue a URL da foto de um input, se houver
+        };
+        console.log('Novo produto:', newProduct);
+
+        try {
+          const createdProduct = await createProduct(newProduct);
+          if (createdProduct) {
+            // Atualize a tabela após adicionar o produto com sucesso
+            const categorias = await fetchCategories();
+            listsProducts(categorias);
+            // Feche o modal e limpe os campos
+            modalProduto.classList.add('hidden');
+            nomeProdutoInput.value = '';
+            categoriaProdutoSelect.value = '';
+            precoProdutoInput.value = '';
+            descricaoProdutoElement.value = '';
+            photoUrlProdutoElement.value = '';
+            // (Opcional) Exiba uma mensagem de sucesso
+          } else {
+            // Lidar com erros de criação (ex: exibir uma mensagem de erro)
+            console.error(
+              'Erro ao criar o produto. O servidor não retornou dados.'
+            );
+            alert('Erro ao criar o produto. Verifique os logs do console.');
+          }
+        } catch (error) {
+          // Lidar com erros de requisição (problemas de rede, etc.)
+          console.error('Erro na requisição:', error);
+          alert('Erro ao criar o produto. Verifique os logs do console.'); // Mensagem mais amigável
+        }
+      });
+
+      formEditarProduto.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const produtoId = parseInt(produtoIdInput.value);
+        const novoNome = nomeProdutoEditInput.value;
+        const novaCategoria = categoriaProdutoEditSelect.value;
+        console.log('Nova categoria:', novaCategoria);
+        console.log('Nova categoria:', categoriaProdutoEditSelect.value);
+        const novoPreco = parseFloat(precoProdutoEditInput.value);
+        const novaDescricao = descricaoProdutoEdit.value;
+        const novaPhotoUrl = photo_urlProdutoEdit.value;
+
+        const updatedProduct = {
+          id: produtoId,
+          name: novoNome,
+          category: novaCategoria,
+          price: novoPreco,
+          description: novaDescricao,
+          photo_url: novaPhotoUrl,
+        };
+
+        try {
+          const updatedData = await updateProduct(updatedProduct); // Passa o objeto aqui
+
+          if (updatedData) {
+            const categorias = await fetchCategories(); // Atualiza as categorias (pode ser otimizado)
+            listsProducts(categorias);
+
+            modalEditarProduto.classList.add('hidden');
+            // Limpe os campos do formulário aqui, se necessário
+          } else {
+            console.error(
+              'Erro ao atualizar o produto. Nenhum dado retornado.'
+            );
+            alert(
+              'Erro ao atualizar o produto. Verifique o console para mais detalhes.'
+            );
+          }
+        } catch (error) {
+          // Trate erros de requisição
+          console.error('Erro na requisição de atualização:', error);
+          alert('Erro ao atualizar o produto. Verifique os logs do console.'); // Mensagem mais amigável
+        }
+      });
+      atualizarTabela(); // Inicializa a tabela
+    </script>
 
     <style>
       ::-webkit-scrollbar {
-        width: 12px; 
+        width: 12px;
       }
 
       ::-webkit-scrollbar-track {
-        background: #f1f1f1; 
-        border-radius: 10px; 
+        background: #f1f1f1;
+        border-radius: 10px;
       }
 
       ::-webkit-scrollbar-thumb {
@@ -547,17 +1028,17 @@
       }
 
       ::-webkit-scrollbar-thumb:hover {
-        background: #555; 
+        background: #555;
       }
 
       ::-webkit-scrollbar-thumb:active {
-        background: #444; 
+        background: #444;
       }
       #itemBar a {
-        transform: scale(1) translateX(0); 
-        transition: all 0.2s ease; 
+        transform: scale(1) translateX(0);
+        transition: all 0.2s ease;
       }
-      
+
       #itemBar:hover a {
         transform: scale(1);
         transform: translateX(1rem);
