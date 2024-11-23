@@ -30,15 +30,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 
-# Em produção: 
-# CORS_ORIGIN_ALLOW_ALL = False
-# CORS_ORIGIN_WHITELIST = [
-#     "https://example.com",
-#     "https://sub.example.com",
-#     "http://localhost:3000",
-#     "http://127.0.0.1:9000"
-# ]
-
 ALLOWED_HOSTS = ['back', '127.0.0.1', 'localhost']
 
 # Application definition
